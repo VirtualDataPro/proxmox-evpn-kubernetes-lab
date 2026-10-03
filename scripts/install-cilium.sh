@@ -2,7 +2,7 @@
 # Run as the control-plane operator after init-control-plane.sh.
 set -euo pipefail
 : "${NODE_IP:?Set NODE_IP to the control-plane address}"
-: "${POD_CIDR:=10.240.0.0/16}"
+: "${POD_CIDR:=10.244.0.0/16}"
 CILIUM_CLI_VERSION=v0.20.1
 CILIUM_VERSION=1.20.2
 [ "$(uname -m)" = x86_64 ] || { echo 'This script targets x86_64'; exit 1; }

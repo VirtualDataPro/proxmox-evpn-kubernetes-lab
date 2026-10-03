@@ -1,39 +1,46 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="1600" height="1080" viewBox="0 0 1600 1080">
-<defs><marker id="arrow" markerWidth="10" markerHeight="10" refX="8" refY="5" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10" fill="#526975"/></marker></defs>
-<rect width="1600" height="1080" fill="#f6f9fb"/>
-<text x="60" y="62" font-family="DejaVu Sans, sans-serif" font-size="34" fill="#152d37" font-weight="700" text-anchor="start">DNS resolution and record ownership</text>
-<text x="60" y="103" font-family="DejaVu Sans, sans-serif" font-size="21" fill="#526975" font-weight="400" text-anchor="start">PowerDNS owns lab records • Unbound resolves • Upstream router integrates clients</text>
-<rect x="60" y="160" width="420" height="130" rx="12" fill="white" stroke="#286ca6" stroke-width="2"/>
-<text x="78" y="192" font-family="DejaVu Sans, sans-serif" font-size="23" fill="#286ca6" font-weight="700" text-anchor="start">LAN / VPN client</text>
-<text x="78" y="224" font-family="DejaVu Sans, sans-serif" font-size="20" fill="#152d37" font-weight="400" text-anchor="start">Queries Upstream router</text>
-<text x="78" y="252" font-family="DejaVu Sans, sans-serif" font-size="20" fill="#152d37" font-weight="400" text-anchor="start">demo.home.arpa and reverse lookups</text>
-<rect x="590" y="160" width="430" height="130" rx="12" fill="white" stroke="#286ca6" stroke-width="2"/>
-<text x="608" y="192" font-family="DejaVu Sans, sans-serif" font-size="23" fill="#286ca6" font-weight="700" text-anchor="start">Upstream router • 192.0.2.1</text>
-<text x="608" y="224" font-family="DejaVu Sans, sans-serif" font-size="20" fill="#152d37" font-weight="400" text-anchor="start">Lab names → dns-a / dns-b</text>
-<text x="608" y="252" font-family="DejaVu Sans, sans-serif" font-size="20" fill="#152d37" font-weight="400" text-anchor="start">Other names → external resolution</text>
-<polyline points="480,225 590,225" fill="none" stroke="#526975" stroke-width="3" marker-end="url(#arrow)"/>
-<rect x="120" y="400" width="580" height="145" rx="12" fill="white" stroke="#147d64" stroke-width="2"/>
-<text x="138" y="432" font-family="DejaVu Sans, sans-serif" font-size="23" fill="#147d64" font-weight="700" text-anchor="start">dns-a • 10.60.20.53</text>
-<text x="138" y="464" font-family="DejaVu Sans, sans-serif" font-size="20" fill="#152d37" font-weight="400" text-anchor="start">Unbound :53 → local PowerDNS :5300</text>
-<text x="138" y="492" font-family="DejaVu Sans, sans-serif" font-size="20" fill="#152d37" font-weight="400" text-anchor="start">Writable authority; API on loopback :8081</text>
-<rect x="900" y="400" width="580" height="145" rx="12" fill="white" stroke="#147d64" stroke-width="2"/>
-<text x="918" y="432" font-family="DejaVu Sans, sans-serif" font-size="23" fill="#147d64" font-weight="700" text-anchor="start">dns-b • 10.60.20.54</text>
-<text x="918" y="464" font-family="DejaVu Sans, sans-serif" font-size="20" fill="#152d37" font-weight="400" text-anchor="start">Unbound :53 → local PowerDNS :5300</text>
-<text x="918" y="492" font-family="DejaVu Sans, sans-serif" font-size="20" fill="#152d37" font-weight="400" text-anchor="start">Secondary authority; TSIG zone transfers</text>
-<polyline points="730,290 730,345 410,345 410,400" fill="none" stroke="#526975" stroke-width="3" marker-end="url(#arrow)"/>
-<text x="145" y="370" font-family="DejaVu Sans, sans-serif" font-size="19" fill="#526975" font-weight="400" text-anchor="start">Lab queries</text>
-<polyline points="880,290 880,345 1190,345 1190,400" fill="none" stroke="#526975" stroke-width="3" marker-end="url(#arrow)"/>
-<polyline points="700,475 900,475" fill="none" stroke="#526975" stroke-width="3" marker-end="url(#arrow)"/>
-<text x="709" y="449" font-family="DejaVu Sans, sans-serif" font-size="19" fill="#526975" font-weight="400" text-anchor="start">Zone transfers</text>
-<rect x="120" y="675" width="580" height="135" rx="12" fill="white" stroke="#286ca6" stroke-width="2"/>
-<text x="138" y="707" font-family="DejaVu Sans, sans-serif" font-size="23" fill="#286ca6" font-weight="700" text-anchor="start">Proxmox SDN DNS integration</text>
-<text x="138" y="739" font-family="DejaVu Sans, sans-serif" font-size="20" fill="#152d37" font-weight="400" text-anchor="start">Each host tunnels localhost:18081 to API</text>
-<text x="138" y="767" font-family="DejaVu Sans, sans-serif" font-size="20" fill="#152d37" font-weight="400" text-anchor="start">Registration depends on provisioning workflow</text>
-<polyline points="410,675 410,545" fill="none" stroke="#526975" stroke-width="3" marker-end="url(#arrow)"/>
-<rect x="900" y="675" width="580" height="135" rx="12" fill="white" stroke="#286ca6" stroke-width="2"/>
-<text x="918" y="707" font-family="DejaVu Sans, sans-serif" font-size="23" fill="#286ca6" font-weight="700" text-anchor="start">Kubernetes CoreDNS • 10.112.0.10</text>
-<text x="918" y="739" font-family="DejaVu Sans, sans-serif" font-size="20" fill="#152d37" font-weight="400" text-anchor="start">Internal Service names: cluster.local</text>
-<text x="918" y="767" font-family="DejaVu Sans, sans-serif" font-size="20" fill="#152d37" font-weight="400" text-anchor="start">No external-dns controller installed</text>
-<text x="60" y="1015" font-family="DejaVu Sans, sans-serif" font-size="18" fill="#526975" font-weight="400" text-anchor="start">Unbound sends external questions back to Upstream router. Keep Upstream router lab forwarding conditional to avoid a DNS loop.</text>
-<text x="60" y="1042" font-family="DejaVu Sans, sans-serif" font-size="18" fill="#526975" font-weight="400" text-anchor="start">Application A records are operator-managed. Forward only the two lab reverse prefixes, not the whole 10/8 tree.</text>
+<svg xmlns="http://www.w3.org/2000/svg" width="1400" height="1130" viewBox="0 0 1400 1130" role="img">
+<title>Lab DNS, from client to authority</title><desc>Query routing, authoritative records, replication and Kubernetes Service discovery.</desc>
+<defs><marker id="arr" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse"><path d="M0 0L10 5L0 10Z" fill="#536a76"/></marker></defs>
+<rect width="1400" height="1130" fill="#f7f9f7"/>
+<text x="52" y="48" font-family="DejaVu Sans,sans-serif" font-size="18" font-weight="700" fill="#087e80" text-anchor="start">PROXMOX LAB  /  PART 2</text>
+<text x="1348" y="48" font-family="DejaVu Sans,sans-serif" font-size="18" font-weight="700" fill="#087e80" text-anchor="end">03</text>
+<text x="52" y="104" font-family="DejaVu Sans,sans-serif" font-size="39" font-weight="700" fill="#142f3d" text-anchor="start">Lab DNS, from client to authority</text>
+<text x="52" y="145" font-family="DejaVu Sans,sans-serif" font-size="23" font-weight="400" fill="#536a76" text-anchor="start">Query routing, authoritative records, replication and Kubernetes Service discovery.</text>
+<rect x="52" y="200" width="500" height="124" rx="10" fill="white" stroke="#d5dfdf" stroke-width="2"/><rect x="52" y="212" width="5" height="100" rx="2" fill="#2a62a2"/>
+<text x="74" y="237" font-family="DejaVu Sans,sans-serif" font-size="25" font-weight="700" fill="#2a62a2" text-anchor="start">LAN / VPN clients</text>
+<text x="74" y="273" font-family="DejaVu Sans,sans-serif" font-size="22" font-weight="400" fill="#142f3d" text-anchor="start">Use Firewalla for lab resolution</text>
+<text x="74" y="304" font-family="DejaVu Sans,sans-serif" font-size="22" font-weight="400" fill="#142f3d" text-anchor="start">Lab names and reverse /24 prefixes</text>
+<rect x="738" y="200" width="610" height="124" rx="10" fill="white" stroke="#d5dfdf" stroke-width="2"/><rect x="738" y="212" width="5" height="100" rx="2" fill="#2a62a2"/>
+<text x="760" y="237" font-family="DejaVu Sans,sans-serif" font-size="25" font-weight="700" fill="#2a62a2" text-anchor="start">Firewalla  /  172.27.85.1</text>
+<text x="760" y="273" font-family="DejaVu Sans,sans-serif" font-size="22" font-weight="400" fill="#142f3d" text-anchor="start">Lab questions → dns1 and dns2</text>
+<text x="760" y="304" font-family="DejaVu Sans,sans-serif" font-size="22" font-weight="400" fill="#142f3d" text-anchor="start">Public questions → configured external resolution</text>
+<polyline points="552,262 738,262" fill="none" stroke="#536a76" stroke-width="3" marker-end="url(#arr)"/>
+<rect x="52" y="435" width="610" height="178" rx="10" fill="white" stroke="#d5dfdf" stroke-width="2"/><rect x="52" y="447" width="5" height="154" rx="2" fill="#087e80"/>
+<text x="74" y="472" font-family="DejaVu Sans,sans-serif" font-size="25" font-weight="700" fill="#087e80" text-anchor="start">dns1  /  10.50.20.53</text>
+<text x="74" y="508" font-family="DejaVu Sans,sans-serif" font-size="22" font-weight="400" fill="#142f3d" text-anchor="start">Unbound :53 answers clients</text>
+<text x="74" y="539" font-family="DejaVu Sans,sans-serif" font-size="22" font-weight="400" fill="#142f3d" text-anchor="start">Local lab questions → PowerDNS :5300</text>
+<text x="74" y="570" font-family="DejaVu Sans,sans-serif" font-size="22" font-weight="400" fill="#142f3d" text-anchor="start">Writable primary; API on loopback :8081</text>
+<rect x="738" y="435" width="610" height="178" rx="10" fill="white" stroke="#d5dfdf" stroke-width="2"/><rect x="738" y="447" width="5" height="154" rx="2" fill="#087e80"/>
+<text x="760" y="472" font-family="DejaVu Sans,sans-serif" font-size="25" font-weight="700" fill="#087e80" text-anchor="start">dns2  /  10.50.20.54</text>
+<text x="760" y="508" font-family="DejaVu Sans,sans-serif" font-size="22" font-weight="400" fill="#142f3d" text-anchor="start">Unbound :53 answers clients</text>
+<text x="760" y="539" font-family="DejaVu Sans,sans-serif" font-size="22" font-weight="400" fill="#142f3d" text-anchor="start">Local lab questions → PowerDNS :5300</text>
+<text x="760" y="570" font-family="DejaVu Sans,sans-serif" font-size="22" font-weight="400" fill="#142f3d" text-anchor="start">Secondary; receives signed zone transfers</text>
+<polyline points="937,324 937,377 357,377 357,435" fill="none" stroke="#536a76" stroke-width="3" marker-end="url(#arr)"/>
+<polyline points="1110,324 1110,435" fill="none" stroke="#536a76" stroke-width="3" marker-end="url(#arr)"/>
+<text x="700" y="659" font-family="DejaVu Sans,sans-serif" font-size="21" font-weight="400" fill="#536a76" text-anchor="middle">Primary → secondary: signed transfers of lab.local and 10.in-addr.arpa</text>
+<rect x="52" y="750" width="610" height="156" rx="10" fill="white" stroke="#d5dfdf" stroke-width="2"/><rect x="52" y="762" width="5" height="132" rx="2" fill="#2a62a2"/>
+<text x="74" y="787" font-family="DejaVu Sans,sans-serif" font-size="25" font-weight="700" fill="#2a62a2" text-anchor="start">Proxmox SDN / IPAM</text>
+<text x="74" y="823" font-family="DejaVu Sans,sans-serif" font-size="22" font-weight="400" fill="#142f3d" text-anchor="start">Host-local tunnel → dns1 management API</text>
+<text x="74" y="854" font-family="DejaVu Sans,sans-serif" font-size="22" font-weight="400" fill="#142f3d" text-anchor="start">Registration depends on provisioning workflow</text>
+<text x="74" y="885" font-family="DejaVu Sans,sans-serif" font-size="22" font-weight="400" fill="#142f3d" text-anchor="start">Static cloud-init alone does not publish a record</text>
+<rect x="738" y="750" width="610" height="156" rx="10" fill="white" stroke="#d5dfdf" stroke-width="2"/><rect x="738" y="762" width="5" height="132" rx="2" fill="#2a62a2"/>
+<text x="760" y="787" font-family="DejaVu Sans,sans-serif" font-size="25" font-weight="700" fill="#2a62a2" text-anchor="start">Kubernetes CoreDNS  /  10.96.0.10</text>
+<text x="760" y="823" font-family="DejaVu Sans,sans-serif" font-size="22" font-weight="400" fill="#142f3d" text-anchor="start">Owns Service names under cluster.local</text>
+<text x="760" y="854" font-family="DejaVu Sans,sans-serif" font-size="22" font-weight="400" fill="#142f3d" text-anchor="start">Other queries use the internal resolver pair</text>
+<text x="760" y="885" font-family="DejaVu Sans,sans-serif" font-size="22" font-weight="400" fill="#142f3d" text-anchor="start">No external-dns controller publishes lab names</text>
+<polyline points="355,750 355,690 220,690 220,613" fill="none" stroke="#536a76" stroke-width="3" marker-end="url(#arr)" stroke-dasharray="9 7"/>
+<polyline points="1045,750 1045,613" fill="none" stroke="#536a76" stroke-width="3" marker-end="url(#arr)" stroke-dasharray="9 7"/>
+<path d="M52 1039H1348" stroke="#d5dfdf" stroke-width="2"/>
+<text x="52" y="1075" font-family="DejaVu Sans,sans-serif" font-size="20" font-weight="400" fill="#536a76" text-anchor="start">Unbound’s public upstream is Firewalla. Keep Firewalla’s lab forwarding conditional to avoid a loop.</text>
+<text x="52" y="1105" font-family="DejaVu Sans,sans-serif" font-size="20" font-weight="400" fill="#536a76" text-anchor="start">Forward reverse 20.50.10.in-addr.arpa and 10.50.10.in-addr.arpa; do not redirect the entire 10/8 tree.</text>
 </svg>

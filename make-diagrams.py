@@ -1,133 +1,141 @@
+"""Editable SVG figures and high-resolution PNGs for the Proxmox lab series."""
 from pathlib import Path
 from html import escape
 import subprocess
 
 OUT = Path(__file__).parent / 'diagrams'
 OUT.mkdir(exist_ok=True)
-INK, MUTED, GREEN, BLUE, ORANGE = '#152d37', '#526975', '#147d64', '#286ca6', '#a56420'
+INK, MUTED, TEAL, BLUE, AMBER = '#142f3d', '#536a76', '#087e80', '#2a62a2', '#9b6225'
+BG, LINE = '#f7f9f7', '#d5dfdf'
 
-class Diagram:
-    def __init__(self, title, subtitle, height=1100):
-        self.height = height
-        self.parts = [f'<svg xmlns="http://www.w3.org/2000/svg" width="1600" height="{height}" viewBox="0 0 1600 {height}">',
-                      '<defs><marker id="arrow" markerWidth="10" markerHeight="10" refX="8" refY="5" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10" fill="#526975"/></marker></defs>',
-                      f'<rect width="1600" height="{height}" fill="#f6f9fb"/>']
-        self.text(60, 62, title, 34, INK, '700')
-        self.text(60, 103, subtitle, 21, MUTED)
-    def text(self, x, y, value, size=22, color=INK, weight='400', anchor='start'):
-        self.parts.append(f'<text x="{x}" y="{y}" font-family="DejaVu Sans, sans-serif" font-size="{size}" fill="{color}" font-weight="{weight}" text-anchor="{anchor}">{escape(value)}</text>')
-    def group(self, x,y,w,h,title,color=BLUE):
-        self.parts.append(f'<rect x="{x}" y="{y}" width="{w}" height="{h}" rx="20" fill="#edf3f7" stroke="{color}" stroke-width="2"/>')
-        self.text(x+24,y+38,title,25,color,'700')
-    def box(self,x,y,w,h,title,lines,color=GREEN):
-        self.parts.append(f'<rect x="{x}" y="{y}" width="{w}" height="{h}" rx="12" fill="white" stroke="{color}" stroke-width="2"/>')
-        self.text(x+18,y+32,title,23,color,'700')
-        for i,line in enumerate(lines): self.text(x+18,y+64+i*28,line,20)
-    def arrow(self, points, label=None, at=None, both=False, dash=False):
-        pts=' '.join(f'{x},{y}' for x,y in points)
-        attrs=' marker-start="url(#arrow)"' if both else ''
-        if dash: attrs+=' stroke-dasharray="8 7"'
-        self.parts.append(f'<polyline points="{pts}" fill="none" stroke="{MUTED}" stroke-width="3" marker-end="url(#arrow)"{attrs}/>')
-        if label and at: self.text(*at,label,19,MUTED)
-    def footer(self, lines):
-        for i,line in enumerate(lines): self.text(60,self.height-65+i*27,line,18,MUTED)
+class Figure:
+    def __init__(self, number, title, subtitle, height=1000):
+        self.h = height
+        self.p = [f'<svg xmlns="http://www.w3.org/2000/svg" width="1400" height="{height}" viewBox="0 0 1400 {height}" role="img">',f'<title>{escape(title)}</title><desc>{escape(subtitle)}</desc>',
+          '<defs><marker id="arr" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse"><path d="M0 0L10 5L0 10Z" fill="#536a76"/></marker></defs>',
+          f'<rect width="1400" height="{height}" fill="{BG}"/>']
+        self.text(52,48,'PROXMOX LAB  /  PART 2',18,TEAL,'700')
+        self.text(1348,48,number,18,TEAL,'700','end')
+        self.text(52,104,title,39,INK,'700')
+        self.text(52,145,subtitle,23,MUTED)
+    def text(self,x,y,t,size=24,color=INK,weight='400',anchor='start'):
+        self.p.append(f'<text x="{x}" y="{y}" font-family="DejaVu Sans,sans-serif" font-size="{size}" font-weight="{weight}" fill="{color}" text-anchor="{anchor}">{escape(t)}</text>')
+    def panel(self,x,y,w,h,title,color=BLUE):
+        self.p.append(f'<rect x="{x}" y="{y}" width="{w}" height="{h}" rx="16" fill="#edf2f3" stroke="{LINE}" stroke-width="2"/>')
+        self.text(x+24,y+40,title,27,color,'700')
+    def box(self,x,y,w,h,title,lines=(),color=TEAL):
+        self.p.append(f'<rect x="{x}" y="{y}" width="{w}" height="{h}" rx="10" fill="white" stroke="{LINE}" stroke-width="2"/><rect x="{x}" y="{y+12}" width="5" height="{h-24}" rx="2" fill="{color}"/>')
+        self.text(x+22,y+37,title,25,color,'700')
+        for i,t in enumerate(lines):self.text(x+22,y+73+i*31,t,22)
+    def arrow(self,points,both=False,dash=False):
+        points=' '.join(f'{x},{y}' for x,y in points)
+        extra=(' marker-start="url(#arr)"' if both else '')+(' stroke-dasharray="9 7"' if dash else '')
+        self.p.append(f'<polyline points="{points}" fill="none" stroke="{MUTED}" stroke-width="3" marker-end="url(#arr)"{extra}/>')
+    def footer(self,a,b=''):
+        self.p.append(f'<path d="M52 {self.h-91}H1348" stroke="{LINE}" stroke-width="2"/>')
+        self.text(52,self.h-55,a,20,MUTED)
+        if b:self.text(52,self.h-25,b,20,MUTED)
     def save(self,name):
-        svg=OUT/f'{name}.svg'
-        svg.write_text('\n'.join(self.parts+['</svg>']))
-        subprocess.run(['rsvg-convert','-o',str(OUT/f'{name}.png'),str(svg)],check=True)
+        f=OUT/(name+'.svg');f.write_text('\n'.join(self.p+['</svg>']))
+        subprocess.run(['rsvg-convert','-w','2100','-o',str(OUT/(name+'.png')),str(f)],check=True)
 
-d=Diagram('The Proxmox and Kubernetes lab','Illustrative example; addresses are placeholders • EVPN overlay on a direct 10 GbE underlay',1220)
-d.box(60,145,390,125,'Clients',['Management / laptop LAN / VPN','DNS and routed application access'],BLUE)
-d.box(550,145,470,125,'Upstream router • 192.0.2.1',['Routes both 10.60.x subnets via hv-a','Conditional DNS → dns-a / dns-b'],BLUE)
-d.box(1120,145,420,125,'NAS • 192.0.2.25',['NFS → Example site persistent data','shared-nfs → shared files / backups'],ORANGE)
-d.arrow([(450,208),(550,208)])
-d.group(60,360,700,525,'hv-a • 192.0.2.11 • primary EVPN exit')
-d.group(840,360,700,525,'hv-b • 192.0.2.12 • additional exit')
-d.box(85,423,650,98,'dns-a • 10.60.20.53 • vnetinf',['PowerDNS primary + Unbound + DNS administration'])
-d.box(865,423,650,98,'dns-b • 10.60.20.54 • vnetinf',['PowerDNS secondary + Unbound'])
-d.box(85,545,650,98,'cp-a • 10.60.10.11 • vnetk8s',['Single Kubernetes control plane and etcd member'])
-d.box(85,667,650,98,'node-a • 10.60.10.12 • vnetk8s',['Cilium / Envoy and application workloads'])
-d.box(865,545,650,98,'node-b • 10.60.10.13 • vnetk8s',['Cilium / Envoy and application workloads'])
-d.box(865,667,650,98,'node-c • 10.60.10.14 • vnetk8s',['Cilium / Envoy + selected Example site job egress'])
-d.text(85,828,'VM disks: local-a • node-local LVM thin',20,MUTED)
-d.text(865,828,'VM disks: local-b • node-local LVM thin',20,MUTED)
-d.arrow([(700,270),(700,330),(410,330),(410,360)],'Management LAN / upstream exit',(70,323))
-d.arrow([(960,270),(960,360)])
-d.text(1070,326,'Management LAN',19,MUTED)
-d.box(270,940,1060,105,'Direct 10 GbE link • enp1s0f1 • MTU 9000',['hv-a 10.255.255.1/30 ↔ hv-b 10.255.255.2/30 • BGP EVPN + VXLAN transport'],BLUE)
-d.arrow([(410,885),(410,940)],both=True)
-d.arrow([(1190,885),(1190,940)],both=True)
-d.footer(['Zone evpndemo • ASN 65000 • VRF VNI 10000 • vnetinf VNI 10001 • vnetk8s VNI 10002',
-          'Guest / pod MTU 1500. Single cable, hv-a upstream route, single control plane, and NAS remain failure dependencies.'])
-d.save('01-network-topology')
+f=Figure('01','Two physical hosts, six lab VMs','Installed topology • Management, the direct underlay and guest networks have separate roles.',1090)
+f.box(52,191,610,124,'Firewalla  /  172.27.85.1',['10.50.10.0/24 and 10.50.20.0/24','Static next hop: pve1 at 172.27.85.11'],BLUE)
+f.box(738,191,610,124,'QNAP  /  172.27.85.25',['Shared NFS and backup storage','Ledger: /NFS/kubernetes/architects-ledger'],AMBER)
+f.text(700,351,'MANAGEMENT LAN  172.27.85.0/24',21,MUTED,'700','middle')
+f.p.append(f'<path d="M170 374H1225 M360 315V374 M1038 315V374" fill="none" stroke="{MUTED}" stroke-width="3"/>')
+f.arrow([(170,374),(170,405)])
+f.arrow([(1225,374),(1225,405)])
+f.panel(52,405,610,436,'pve1  /  172.27.85.11')
+f.panel(738,405,610,436,'pve2  /  172.27.85.12')
+for x,rows in [(76,[('dns1  ·  10.50.20.53','infranet · DNS primary + Unbound'),('cp1  ·  10.50.10.11','evpntest · API + single-member etcd'),('worker1  ·  10.50.10.12','evpntest · application workloads')]),(762,[('dns2  ·  10.50.20.54','infranet · DNS secondary + Unbound'),('worker2  ·  10.50.10.13','evpntest · application workloads'),('worker3  ·  10.50.10.14','evpntest · workloads + selected egress')])]:
+    for n,(title,line) in enumerate(rows):f.box(x,467+n*105,562,92,title,[line])
+f.text(76,814,'VM disks: NVMe-Local-1',21,MUTED)
+f.text(762,814,'VM disks: NVMe-Local-2',21,MUTED)
+f.box(253,878,894,95,'Direct 10 GbE  /  enp1s0f1  /  MTU 9000',['10.0.0.1/30  ↔  10.0.0.2/30  ·  BGP EVPN + VXLAN'],BLUE)
+f.arrow([(358,841),(358,878)],both=True);f.arrow([(1043,841),(1043,878)],both=True)
+f.footer('evpn1: VRF VNI 10000  ·  infranet: VNI 10001  ·  evpntest: VNI 10002','Guest and pod MTU 1500. The primary exit, control plane, direct cable and storage remain dependencies.')
+f.save('01-network-topology')
 
-d=Diagram('How clients reach the websites','DNS selects the shared VIP • Cilium routes by hostname/SNI • TLS ownership differs by application',1050)
-d.box(60,170,410,120,'Client',['LAN / laptop / VPN','Uses Upstream router-backed lab DNS'],BLUE)
-d.box(590,170,450,120,'DNS lookup',['wiki.demo.home.arpa and site.demo.home.arpa','Both return 10.60.10.100'],BLUE)
-d.arrow([(470,230),(590,230)],'Resolve name',(477,209))
-d.box(60,400,410,120,'Upstream router → hv-a',['10.60.10.0/24 routed via','192.0.2.11 → EVPN'],BLUE)
-d.arrow([(265,290),(265,400)])
-d.box(590,400,450,120,'Shared VIP • 10.60.10.100',['One elected worker announces ARP','Gateway Service → Cilium Envoy'])
-d.arrow([(470,460),(590,460)],'TCP 443',(484,438))
-d.box(1130,290,410,170,'Wiki • lab-wiki',['TLSRoute selects wiki SNI','TLS passthrough → Nginx :443','2 replicas across physical hosts'])
-d.box(1130,575,410,170,'Example site • example-site',['TLS terminates at Cilium','HTTPRoute → site-web :80','3 web replicas → NAS NFS'])
-d.arrow([(1040,460),(1080,460),(1080,375),(1130,375)])
-d.arrow([(1040,460),(1080,460),(1080,660),(1130,660)])
-d.box(590,730,450,120,'Control plane • cp-a',['Kubernetes Lease supports elections','API needed for ownership changes'],ORANGE)
-d.arrow([(815,730),(815,520)],dash=True)
-d.footer(['HTTPS source policy permits the documented management LAN, laptop LAN, and VPN; HTTP redirects to HTTPS.',
-          'Measured worker failover: lease acquired ~22 s; both sites recovered by ~38 s. This does not prove physical-host HA.'])
-d.save('02-application-access')
+f=Figure('02','One VIP, two HTTPS backends','Installed websites • The elected worker and the application pod can be different nodes.',1070)
+f.box(52,196,550,136,'Client uses lab DNS',['wiki.lab.local · ledger.lab.local','Both return 10.50.10.100'],BLUE)
+f.box(798,196,550,136,'Firewalla routes to pve1',['172.27.85.11 → evpn1 → evpntest'],BLUE)
+f.arrow([(602,253),(798,253)])
+f.box(370,388,660,140,'Cilium Gateway  /  10.50.10.100',['LB-IPAM allocates · one worker answers ARP','Cilium Envoy selects the application by hostname'])
+f.arrow([(1073,332),(1073,354),(890,354),(890,388)])
+f.box(52,626,610,185,'wiki.lab.local  /  TLS passthrough',['TLSRoute → lab-wiki Service :443','Nginx terminates TLS on container port 8443','Two replicas across pve1 / pve2'])
+f.box(738,626,610,185,'ledger.lab.local  /  TLS termination',['Certificate at Cilium · HTTPRoute selects backend','ledger-web Service :80 → web pods','Three web replicas · shared NFS'],BLUE)
+f.arrow([(535,528),(535,576),(357,576),(357,626)]);f.arrow([(865,528),(865,576),(1043,576),(1043,626)])
+f.text(700,867,'cp1 API supports Lease elections  ·  externalTrafficPolicy: Cluster',23,AMBER,'700','middle')
+f.text(700,910,'HTTP redirects to HTTPS. Gateway source policy permits the intended LAN / VPN ranges.',21,MUTED,'400','middle')
+f.footer('Worker-pause test: new holder observed at 22.1 s; both HTTPS sites returned 200 by 38 s.','A new announcer does not remove Firewalla’s fixed upstream next hop through pve1.')
+f.save('02-application-access')
 
-d=Diagram('DNS resolution and record ownership','PowerDNS owns lab records • Unbound resolves • Upstream router integrates clients',1080)
-d.box(60,160,420,130,'LAN / VPN client',['Queries Upstream router','demo.home.arpa and reverse lookups'],BLUE)
-d.box(590,160,430,130,'Upstream router • 192.0.2.1',['Lab names → dns-a / dns-b','Other names → external resolution'],BLUE)
-d.arrow([(480,225),(590,225)])
-d.box(120,400,580,145,'dns-a • 10.60.20.53',['Unbound :53 → local PowerDNS :5300','Writable authority; API on loopback :8081'])
-d.box(900,400,580,145,'dns-b • 10.60.20.54',['Unbound :53 → local PowerDNS :5300','Secondary authority; TSIG zone transfers'])
-d.arrow([(730,290),(730,345),(410,345),(410,400)],'Lab queries',(145,370))
-d.arrow([(880,290),(880,345),(1190,345),(1190,400)])
-d.arrow([(700,475),(900,475)],'Zone transfers',(709,449))
-d.box(120,675,580,135,'Proxmox SDN DNS integration',['Each host tunnels localhost:18081 to API','Registration depends on provisioning workflow'],BLUE)
-d.arrow([(410,675),(410,545)])
-d.box(900,675,580,135,'Kubernetes CoreDNS • 10.112.0.10',['Internal Service names: cluster.local','No external-dns controller installed'],BLUE)
-d.footer(['Unbound sends external questions back to Upstream router. Keep Upstream router lab forwarding conditional to avoid a DNS loop.',
-          'Application A records are operator-managed. Forward only the two lab reverse prefixes, not the whole 10/8 tree.'])
-d.save('03-dns-workflow')
+f=Figure('03','Lab DNS, from client to authority','Query routing, authoritative records, replication and Kubernetes Service discovery.',1130)
+f.box(52,200,500,124,'LAN / VPN clients',['Use Firewalla for lab resolution','Lab names and reverse /24 prefixes'],BLUE)
+f.box(738,200,610,124,'Firewalla  /  172.27.85.1',['Lab questions → dns1 and dns2','Public questions → configured external resolution'],BLUE)
+f.arrow([(552,262),(738,262)])
+f.box(52,435,610,178,'dns1  /  10.50.20.53',['Unbound :53 answers clients','Local lab questions → PowerDNS :5300','Writable primary; API on loopback :8081'])
+f.box(738,435,610,178,'dns2  /  10.50.20.54',['Unbound :53 answers clients','Local lab questions → PowerDNS :5300','Secondary; receives signed zone transfers'])
+f.arrow([(937,324),(937,377),(357,377),(357,435)]);f.arrow([(1110,324),(1110,435)])
+f.text(700,659,'Primary → secondary: signed transfers of lab.local and 10.in-addr.arpa',21,MUTED,'400','middle')
+f.box(52,750,610,156,'Proxmox SDN / IPAM',['Host-local tunnel → dns1 management API','Registration depends on provisioning workflow','Static cloud-init alone does not publish a record'],BLUE)
+f.box(738,750,610,156,'Kubernetes CoreDNS  /  10.96.0.10',['Owns Service names under cluster.local','Other queries use the internal resolver pair','No external-dns controller publishes lab names'],BLUE)
+f.arrow([(355,750),(355,690),(220,690),(220,613)],dash=True)
+f.arrow([(1045,750),(1045,613)],dash=True)
+f.footer('Unbound’s public upstream is Firewalla. Keep Firewalla’s lab forwarding conditional to avoid a loop.','Forward reverse 20.50.10.in-addr.arpa and 10.50.10.in-addr.arpa; do not redirect the entire 10/8 tree.')
+f.save('03-dns-workflow')
 
-d=Diagram('Build and verify the deployment','A reader workflow reconstructed from the runbooks • not a claim about the original command-by-command history',1030)
-steps=[('1  Prepare Proxmox',['Migrate Ceph-dependent disks','Upgrade and verify quorum']),
-       ('2  Verify the underlay',['10.255.255.1 ↔ 10.255.255.2','10 GbE • MTU 9000']),
-       ('3  Configure EVPN / VNets',['Controller → zone → VNets','Apply; test across hosts']),
-       ('4  Build DNS and routing',['Primary / secondary + Unbound','Upstream router routes and forwards']),
-       ('5  Provision Rocky nodes',['Cloud-init • static addresses','Prepare runtime → kubeadm → Cilium']),
-       ('6  Verify Kubernetes',['Nodes Ready; Cilium healthy','Cross-node pod traffic and DNS']),
-       ('7  Deploy applications',['Wiki static build; Example site NFS','Services and readiness checks']),
-       ('8  Publish and validate',['Gateway + VIP + TLS + policy','Test before DNS; verify failover'])]
-coords=[(60,180),(570,180),(1080,180),(1080,435),(570,435),(60,435),(60,690),(570,690)]
-for (title,lines),(x,y) in zip(steps,coords): d.box(x,y,460,140,title,lines)
-for a,b in [([(520,250),(570,250)],None), ([(1030,250),(1080,250)],None), ([(1310,320),(1310,435)],None), ([(1080,505),(1030,505)],None), ([(570,505),(520,505)],None), ([(290,575),(290,690)],None), ([(520,760),(570,760)],None)]: d.arrow(a)
-d.box(1080,690,460,140,'Then protect and operate',['Current backups / restore drills','Maintenance and monitoring'],ORANGE)
-d.arrow([(1030,760),(1080,760)])
-d.footer(['Retain configuration after each checkpoint. Back up stateful data separately from application manifests.',
-          'Bootstrap/wiki code was lab-tested; public address and hostname substitutions require your own validation.'])
-d.save('04-deployment-workflow')
+f=Figure('04','Publish a wiki revision you can roll back','The source is durable; each pod reconstructs the generated site.',1040)
+st=[(52,205,'1  Edit the Markdown',['Keep sources and dependency lock','Review content and links']), (738,205,'2  Build with strict checks',['MkDocs → generated HTML and assets','Keep private material outside the build']), (738,440,'3  Package the revision',['Compressed archive → immutable ConfigMaps','Digest-pinned Nginx image']), (52,440,'4  Validate and deploy',['Server-side dry run, then apply','Init container unpacks into emptyDir']), (52,675,'5  Verify the result',['Two physical-host placements','Check content, TLS and HTTP redirect']), (738,675,'6  Update or roll back',['Publish another content revision','Retain old ConfigMaps for rollout undo'])]
+for x,y,t,lines in st:f.box(x,y,610,149,t,lines)
+f.arrow([(662,276),(738,276)]);f.arrow([(1043,354),(1043,440)]);f.arrow([(738,515),(662,515)]);f.arrow([(357,589),(357,675)]);f.arrow([(662,750),(738,750)])
+f.footer('The publisher manages wiki content and workload resources. TLS Secrets and Gateway configuration are separate.','Deployment rollback does not restore a changed shared ConfigMap, certificate, Gateway or DNS record.')
+f.save('04-deployment-workflow')
 
-d=Diagram('Re-IP the lab in stages','Illustrative staged migration • 198.51.100.0/24 → 192.0.2.0/24',930)
-reip=[('1  Admin workstation second NIC',['Add the NIC before changing','the rest of the environment']),
-      ('2  Switch management IP',['Update the switch address','before moving the gateway']),
-      ('3  Network gateway',['Move the network gateway','to the new addressing']),
-      ('4  NFS / Proxmox / workloads',['Update hosts manually; use tooling','to update dependent systems']),
-      ('5  Monitoring and other servers',['Update Grafana / Prometheus targets','Re-IP the remaining servers'])]
-for title,lines,x,y in [(reip[0][0],reip[0][1],60,180),(reip[1][0],reip[1][1],570,180),(reip[2][0],reip[2][1],1080,180),(reip[3][0],reip[3][1],1080,460),(reip[4][0],reip[4][1],570,460)]:
-    d.box(x,y,460,150,title,lines)
-d.arrow([(520,255),(570,255)])
-d.arrow([(1030,255),(1080,255)])
-d.arrow([(1310,330),(1310,460)])
-d.arrow([(1080,535),(1030,535)])
-d.box(60,460,460,150,'Reader verification',['Check storage, DNS, cluster health','and monitoring after changes'],ORANGE)
-d.arrow([(570,535),(520,535)])
-d.footer(['Illustrative migration order. Validate each dependency and record actual outages in your own environment.',
-          'Second-NIC addresses, route selection, and exact switch/gateway cutover settings still need the original configuration.'])
-d.save('05-reip-workflow')
-print(f'Generated {len(list(OUT.glob("*.svg")))} SVGs and {len(list(OUT.glob("*.png")))} PNGs in {OUT}')
+f=Figure('05','Re-IP the lab while retaining an access path','192.168.1.0/24 → 172.27.85.0/24  ·  Prompted by overlapping networks while on VPN.',1080)
+rows=[('1','Give RougarouOS a second NIC','Checkpoint: console access and the intended route are available.'),('2','Change the switch management address','Checkpoint: reach the switch on its new management address.'),('3','Move the network gateway','Checkpoint: management routing and external DNS / HTTPS work.'),('4','Move NFS, Proxmox and other workloads','Proxmox nodes: manual changes, about one hour of work.'),('5','Update monitoring and remaining servers','Checkpoint: revise targets, DNS, storage references and inventory.')]
+for i,(n,t,sub) in enumerate(rows):
+ y=196+i*151
+ f.p.append(f'<circle cx="91" cy="{y+49}" r="30" fill="{TEAL}"/>');f.text(91,y+58,n,27,'white','700','middle')
+ f.box(154,y,1194,119,t,[sub],BLUE)
+ if i<4:f.arrow([(91,y+80),(91,y+121)])
+f.footer('Sequence from the author’s account. Checkpoints are guidance for repeating it, not recovered command history.','The one-hour estimate covers manual Proxmox re-IP work; it is not a measured service-outage duration.')
+f.save('05-reip-workflow')
+
+f=Figure('06','Follow one cross-host pod packet','Same Kubernetes VNet, two physical hosts. Proxmox supplies the VXLAN crossing.',1030)
+f.panel(52,201,610,514,'Source: worker1 on pve1')
+f.panel(738,201,610,514,'Destination: worker2 on pve2')
+f.box(76,270,562,112,'Source pod',['Pod range on worker1: 10.244.3.0/24'])
+f.box(762,270,562,112,'Destination pod',['Pod range on worker2: 10.244.2.0/24'])
+f.box(76,433,562,112,'Cilium native routing',['Node 10.50.10.12 → peer 10.50.10.13'])
+f.box(762,433,562,112,'Cilium / Linux routing',['Node 10.50.10.13 → local destination pod'])
+f.box(76,596,562,89,'Proxmox VNet: evpntest',[],BLUE)
+f.box(762,596,562,89,'Proxmox VNet: evpntest',[],BLUE)
+f.arrow([(357,382),(357,433)]);f.arrow([(357,545),(357,596)])
+f.arrow([(1043,596),(1043,545)]);f.arrow([(1043,433),(1043,382)])
+f.box(253,775,894,112,'VXLAN VNI 10002 over the direct cable',['Outer IP: 10.0.0.1 → 10.0.0.2  ·  Underlay MTU 9000'],BLUE)
+f.arrow([(357,685),(357,775)]);f.arrow([(1043,775),(1043,685)])
+f.footer('Guest / pod MTU 1500. Cilium adds no second VXLAN tunnel in the deployed native-routing mode.','The BGP EVPN session distributes reachability; the application’s data crosses the cable in VXLAN packets.')
+f.save('06-packet-path')
+
+# Cover uses the author's original RougarouOS terminal wolf, supplied as text.
+cover_bg, cover_ink, cover_green = '#0b2025', '#edf5ed', '#96cba7'
+f=Figure('SERIES 02','Proxmox lab series, Part 2','EVPN and Kubernetes with Codex and GPT on RougarouOS',790)
+f.p=[f'<svg xmlns="http://www.w3.org/2000/svg" width="1400" height="790" viewBox="0 0 1400 790" role="img"><title>My two-node Proxmox lab, Part 2</title><desc>The original RougarouOS terminal wolf beside the article title. EVPN and Kubernetes, built with Codex and GPT.</desc><rect width="1400" height="790" fill="{cover_bg}"/>']
+f.text(70,76,'THE PROXMOX LAB SERIES',22,cover_green,'700')
+f.text(1330,76,'PART 02',22,cover_green,'700','end')
+f.text(70,193,'A new chapter for',46,cover_ink,'400')
+f.text(70,271,'my two-node lab.',64,cover_ink,'700')
+f.text(70,365,'EVPN + Kubernetes',42,cover_green,'700')
+f.text(70,445,'Built with Codex and GPT',30,cover_ink)
+f.text(70,492,'on RougarouOS',30,cover_ink)
+f.text(70,571,'About a week of building, testing and documenting.',22,'#aac0bb')
+f.p.append('<path d="M817 159V597" stroke="#30524f" stroke-width="2"/>')
+for i,row in enumerate((Path(__file__).parent/'assets/wolf.txt').read_text().splitlines()):
+    f.p.append(f'<text xml:space="preserve" x="839" y="{173+i*21}" font-family="DejaVu Sans Mono,monospace" font-size="18" fill="{cover_green}">{escape(row)}</text>')
+f.p.append('<path d="M70 653H1330" stroke="#30524f" stroke-width="2"/>')
+f.text(70,704,'PART 1  Ceph, Podman and Pi quorum  →  PART 2  EVPN and Kubernetes',22,cover_ink)
+f.text(70,748,'NEXT  Boot-drive replacement + Keepalived / VRRP + routing through pve2',22,cover_green)
+f.save('00-series-cover')
+print('Rendered branded cover and six diagrams as SVG and 2100px PNG.')

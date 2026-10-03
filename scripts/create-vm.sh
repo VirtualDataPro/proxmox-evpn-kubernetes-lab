@@ -8,9 +8,9 @@ set -euo pipefail
 : "${CLOUD_IMAGE:?Set the path to the verified Rocky GenericCloud qcow2}"
 : "${IMAGE_SHA256:?Set its published SHA256}"
 : "${SSH_PUBLIC_KEY:?Set the path to your SSH public key, never a private key}"
-: "${VNET:=vnetk8s}"
-: "${GATEWAY:=10.60.10.1}"
-: "${DNS_SERVERS:=10.60.20.53 10.60.20.54}"
+: "${VNET:=evpntest}"
+: "${GATEWAY:=10.50.10.1}"
+: "${DNS_SERVERS:=10.50.20.53 10.50.20.54}"
 case "$VM_ID" in *[!0-9]*|'') echo 'VM_ID must be numeric'; exit 1;; esac
 pvesh get /cluster/resources --type vm --output-format json |
   python3 -c 'import json,sys; wanted=int(sys.argv[1]); assert all(x["vmid"] != wanted for x in json.load(sys.stdin)), "VM ID already exists"' "$VM_ID"

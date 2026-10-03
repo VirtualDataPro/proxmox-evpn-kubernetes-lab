@@ -1,52 +1,41 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="1600" height="1030" viewBox="0 0 1600 1030">
-<defs><marker id="arrow" markerWidth="10" markerHeight="10" refX="8" refY="5" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10" fill="#526975"/></marker></defs>
-<rect width="1600" height="1030" fill="#f6f9fb"/>
-<text x="60" y="62" font-family="DejaVu Sans, sans-serif" font-size="34" fill="#152d37" font-weight="700" text-anchor="start">Build and verify the deployment</text>
-<text x="60" y="103" font-family="DejaVu Sans, sans-serif" font-size="21" fill="#526975" font-weight="400" text-anchor="start">A reader workflow reconstructed from the runbooks • not a claim about the original command-by-command history</text>
-<rect x="60" y="180" width="460" height="140" rx="12" fill="white" stroke="#147d64" stroke-width="2"/>
-<text x="78" y="212" font-family="DejaVu Sans, sans-serif" font-size="23" fill="#147d64" font-weight="700" text-anchor="start">1  Prepare Proxmox</text>
-<text x="78" y="244" font-family="DejaVu Sans, sans-serif" font-size="20" fill="#152d37" font-weight="400" text-anchor="start">Migrate Ceph-dependent disks</text>
-<text x="78" y="272" font-family="DejaVu Sans, sans-serif" font-size="20" fill="#152d37" font-weight="400" text-anchor="start">Upgrade and verify quorum</text>
-<rect x="570" y="180" width="460" height="140" rx="12" fill="white" stroke="#147d64" stroke-width="2"/>
-<text x="588" y="212" font-family="DejaVu Sans, sans-serif" font-size="23" fill="#147d64" font-weight="700" text-anchor="start">2  Verify the underlay</text>
-<text x="588" y="244" font-family="DejaVu Sans, sans-serif" font-size="20" fill="#152d37" font-weight="400" text-anchor="start">10.255.255.1 ↔ 10.255.255.2</text>
-<text x="588" y="272" font-family="DejaVu Sans, sans-serif" font-size="20" fill="#152d37" font-weight="400" text-anchor="start">10 GbE • MTU 9000</text>
-<rect x="1080" y="180" width="460" height="140" rx="12" fill="white" stroke="#147d64" stroke-width="2"/>
-<text x="1098" y="212" font-family="DejaVu Sans, sans-serif" font-size="23" fill="#147d64" font-weight="700" text-anchor="start">3  Configure EVPN / VNets</text>
-<text x="1098" y="244" font-family="DejaVu Sans, sans-serif" font-size="20" fill="#152d37" font-weight="400" text-anchor="start">Controller → zone → VNets</text>
-<text x="1098" y="272" font-family="DejaVu Sans, sans-serif" font-size="20" fill="#152d37" font-weight="400" text-anchor="start">Apply; test across hosts</text>
-<rect x="1080" y="435" width="460" height="140" rx="12" fill="white" stroke="#147d64" stroke-width="2"/>
-<text x="1098" y="467" font-family="DejaVu Sans, sans-serif" font-size="23" fill="#147d64" font-weight="700" text-anchor="start">4  Build DNS and routing</text>
-<text x="1098" y="499" font-family="DejaVu Sans, sans-serif" font-size="20" fill="#152d37" font-weight="400" text-anchor="start">Primary / secondary + Unbound</text>
-<text x="1098" y="527" font-family="DejaVu Sans, sans-serif" font-size="20" fill="#152d37" font-weight="400" text-anchor="start">Upstream router routes and forwards</text>
-<rect x="570" y="435" width="460" height="140" rx="12" fill="white" stroke="#147d64" stroke-width="2"/>
-<text x="588" y="467" font-family="DejaVu Sans, sans-serif" font-size="23" fill="#147d64" font-weight="700" text-anchor="start">5  Provision Rocky nodes</text>
-<text x="588" y="499" font-family="DejaVu Sans, sans-serif" font-size="20" fill="#152d37" font-weight="400" text-anchor="start">Cloud-init • static addresses</text>
-<text x="588" y="527" font-family="DejaVu Sans, sans-serif" font-size="20" fill="#152d37" font-weight="400" text-anchor="start">Prepare runtime → kubeadm → Cilium</text>
-<rect x="60" y="435" width="460" height="140" rx="12" fill="white" stroke="#147d64" stroke-width="2"/>
-<text x="78" y="467" font-family="DejaVu Sans, sans-serif" font-size="23" fill="#147d64" font-weight="700" text-anchor="start">6  Verify Kubernetes</text>
-<text x="78" y="499" font-family="DejaVu Sans, sans-serif" font-size="20" fill="#152d37" font-weight="400" text-anchor="start">Nodes Ready; Cilium healthy</text>
-<text x="78" y="527" font-family="DejaVu Sans, sans-serif" font-size="20" fill="#152d37" font-weight="400" text-anchor="start">Cross-node pod traffic and DNS</text>
-<rect x="60" y="690" width="460" height="140" rx="12" fill="white" stroke="#147d64" stroke-width="2"/>
-<text x="78" y="722" font-family="DejaVu Sans, sans-serif" font-size="23" fill="#147d64" font-weight="700" text-anchor="start">7  Deploy applications</text>
-<text x="78" y="754" font-family="DejaVu Sans, sans-serif" font-size="20" fill="#152d37" font-weight="400" text-anchor="start">Wiki static build; Example site NFS</text>
-<text x="78" y="782" font-family="DejaVu Sans, sans-serif" font-size="20" fill="#152d37" font-weight="400" text-anchor="start">Services and readiness checks</text>
-<rect x="570" y="690" width="460" height="140" rx="12" fill="white" stroke="#147d64" stroke-width="2"/>
-<text x="588" y="722" font-family="DejaVu Sans, sans-serif" font-size="23" fill="#147d64" font-weight="700" text-anchor="start">8  Publish and validate</text>
-<text x="588" y="754" font-family="DejaVu Sans, sans-serif" font-size="20" fill="#152d37" font-weight="400" text-anchor="start">Gateway + VIP + TLS + policy</text>
-<text x="588" y="782" font-family="DejaVu Sans, sans-serif" font-size="20" fill="#152d37" font-weight="400" text-anchor="start">Test before DNS; verify failover</text>
-<polyline points="520,250 570,250" fill="none" stroke="#526975" stroke-width="3" marker-end="url(#arrow)"/>
-<polyline points="1030,250 1080,250" fill="none" stroke="#526975" stroke-width="3" marker-end="url(#arrow)"/>
-<polyline points="1310,320 1310,435" fill="none" stroke="#526975" stroke-width="3" marker-end="url(#arrow)"/>
-<polyline points="1080,505 1030,505" fill="none" stroke="#526975" stroke-width="3" marker-end="url(#arrow)"/>
-<polyline points="570,505 520,505" fill="none" stroke="#526975" stroke-width="3" marker-end="url(#arrow)"/>
-<polyline points="290,575 290,690" fill="none" stroke="#526975" stroke-width="3" marker-end="url(#arrow)"/>
-<polyline points="520,760 570,760" fill="none" stroke="#526975" stroke-width="3" marker-end="url(#arrow)"/>
-<rect x="1080" y="690" width="460" height="140" rx="12" fill="white" stroke="#a56420" stroke-width="2"/>
-<text x="1098" y="722" font-family="DejaVu Sans, sans-serif" font-size="23" fill="#a56420" font-weight="700" text-anchor="start">Then protect and operate</text>
-<text x="1098" y="754" font-family="DejaVu Sans, sans-serif" font-size="20" fill="#152d37" font-weight="400" text-anchor="start">Current backups / restore drills</text>
-<text x="1098" y="782" font-family="DejaVu Sans, sans-serif" font-size="20" fill="#152d37" font-weight="400" text-anchor="start">Maintenance and monitoring</text>
-<polyline points="1030,760 1080,760" fill="none" stroke="#526975" stroke-width="3" marker-end="url(#arrow)"/>
-<text x="60" y="965" font-family="DejaVu Sans, sans-serif" font-size="18" fill="#526975" font-weight="400" text-anchor="start">Retain configuration after each checkpoint. Back up stateful data separately from application manifests.</text>
-<text x="60" y="992" font-family="DejaVu Sans, sans-serif" font-size="18" fill="#526975" font-weight="400" text-anchor="start">Bootstrap/wiki code was lab-tested; public address and hostname substitutions require your own validation.</text>
+<svg xmlns="http://www.w3.org/2000/svg" width="1400" height="1040" viewBox="0 0 1400 1040" role="img">
+<title>Publish a wiki revision you can roll back</title><desc>The source is durable; each pod reconstructs the generated site.</desc>
+<defs><marker id="arr" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse"><path d="M0 0L10 5L0 10Z" fill="#536a76"/></marker></defs>
+<rect width="1400" height="1040" fill="#f7f9f7"/>
+<text x="52" y="48" font-family="DejaVu Sans,sans-serif" font-size="18" font-weight="700" fill="#087e80" text-anchor="start">PROXMOX LAB  /  PART 2</text>
+<text x="1348" y="48" font-family="DejaVu Sans,sans-serif" font-size="18" font-weight="700" fill="#087e80" text-anchor="end">04</text>
+<text x="52" y="104" font-family="DejaVu Sans,sans-serif" font-size="39" font-weight="700" fill="#142f3d" text-anchor="start">Publish a wiki revision you can roll back</text>
+<text x="52" y="145" font-family="DejaVu Sans,sans-serif" font-size="23" font-weight="400" fill="#536a76" text-anchor="start">The source is durable; each pod reconstructs the generated site.</text>
+<rect x="52" y="205" width="610" height="149" rx="10" fill="white" stroke="#d5dfdf" stroke-width="2"/><rect x="52" y="217" width="5" height="125" rx="2" fill="#087e80"/>
+<text x="74" y="242" font-family="DejaVu Sans,sans-serif" font-size="25" font-weight="700" fill="#087e80" text-anchor="start">1  Edit the Markdown</text>
+<text x="74" y="278" font-family="DejaVu Sans,sans-serif" font-size="22" font-weight="400" fill="#142f3d" text-anchor="start">Keep sources and dependency lock</text>
+<text x="74" y="309" font-family="DejaVu Sans,sans-serif" font-size="22" font-weight="400" fill="#142f3d" text-anchor="start">Review content and links</text>
+<rect x="738" y="205" width="610" height="149" rx="10" fill="white" stroke="#d5dfdf" stroke-width="2"/><rect x="738" y="217" width="5" height="125" rx="2" fill="#087e80"/>
+<text x="760" y="242" font-family="DejaVu Sans,sans-serif" font-size="25" font-weight="700" fill="#087e80" text-anchor="start">2  Build with strict checks</text>
+<text x="760" y="278" font-family="DejaVu Sans,sans-serif" font-size="22" font-weight="400" fill="#142f3d" text-anchor="start">MkDocs → generated HTML and assets</text>
+<text x="760" y="309" font-family="DejaVu Sans,sans-serif" font-size="22" font-weight="400" fill="#142f3d" text-anchor="start">Keep private material outside the build</text>
+<rect x="738" y="440" width="610" height="149" rx="10" fill="white" stroke="#d5dfdf" stroke-width="2"/><rect x="738" y="452" width="5" height="125" rx="2" fill="#087e80"/>
+<text x="760" y="477" font-family="DejaVu Sans,sans-serif" font-size="25" font-weight="700" fill="#087e80" text-anchor="start">3  Package the revision</text>
+<text x="760" y="513" font-family="DejaVu Sans,sans-serif" font-size="22" font-weight="400" fill="#142f3d" text-anchor="start">Compressed archive → immutable ConfigMaps</text>
+<text x="760" y="544" font-family="DejaVu Sans,sans-serif" font-size="22" font-weight="400" fill="#142f3d" text-anchor="start">Digest-pinned Nginx image</text>
+<rect x="52" y="440" width="610" height="149" rx="10" fill="white" stroke="#d5dfdf" stroke-width="2"/><rect x="52" y="452" width="5" height="125" rx="2" fill="#087e80"/>
+<text x="74" y="477" font-family="DejaVu Sans,sans-serif" font-size="25" font-weight="700" fill="#087e80" text-anchor="start">4  Validate and deploy</text>
+<text x="74" y="513" font-family="DejaVu Sans,sans-serif" font-size="22" font-weight="400" fill="#142f3d" text-anchor="start">Server-side dry run, then apply</text>
+<text x="74" y="544" font-family="DejaVu Sans,sans-serif" font-size="22" font-weight="400" fill="#142f3d" text-anchor="start">Init container unpacks into emptyDir</text>
+<rect x="52" y="675" width="610" height="149" rx="10" fill="white" stroke="#d5dfdf" stroke-width="2"/><rect x="52" y="687" width="5" height="125" rx="2" fill="#087e80"/>
+<text x="74" y="712" font-family="DejaVu Sans,sans-serif" font-size="25" font-weight="700" fill="#087e80" text-anchor="start">5  Verify the result</text>
+<text x="74" y="748" font-family="DejaVu Sans,sans-serif" font-size="22" font-weight="400" fill="#142f3d" text-anchor="start">Two physical-host placements</text>
+<text x="74" y="779" font-family="DejaVu Sans,sans-serif" font-size="22" font-weight="400" fill="#142f3d" text-anchor="start">Check content, TLS and HTTP redirect</text>
+<rect x="738" y="675" width="610" height="149" rx="10" fill="white" stroke="#d5dfdf" stroke-width="2"/><rect x="738" y="687" width="5" height="125" rx="2" fill="#087e80"/>
+<text x="760" y="712" font-family="DejaVu Sans,sans-serif" font-size="25" font-weight="700" fill="#087e80" text-anchor="start">6  Update or roll back</text>
+<text x="760" y="748" font-family="DejaVu Sans,sans-serif" font-size="22" font-weight="400" fill="#142f3d" text-anchor="start">Publish another content revision</text>
+<text x="760" y="779" font-family="DejaVu Sans,sans-serif" font-size="22" font-weight="400" fill="#142f3d" text-anchor="start">Retain old ConfigMaps for rollout undo</text>
+<polyline points="662,276 738,276" fill="none" stroke="#536a76" stroke-width="3" marker-end="url(#arr)"/>
+<polyline points="1043,354 1043,440" fill="none" stroke="#536a76" stroke-width="3" marker-end="url(#arr)"/>
+<polyline points="738,515 662,515" fill="none" stroke="#536a76" stroke-width="3" marker-end="url(#arr)"/>
+<polyline points="357,589 357,675" fill="none" stroke="#536a76" stroke-width="3" marker-end="url(#arr)"/>
+<polyline points="662,750 738,750" fill="none" stroke="#536a76" stroke-width="3" marker-end="url(#arr)"/>
+<path d="M52 949H1348" stroke="#d5dfdf" stroke-width="2"/>
+<text x="52" y="985" font-family="DejaVu Sans,sans-serif" font-size="20" font-weight="400" fill="#536a76" text-anchor="start">The publisher manages wiki content and workload resources. TLS Secrets and Gateway configuration are separate.</text>
+<text x="52" y="1015" font-family="DejaVu Sans,sans-serif" font-size="20" font-weight="400" fill="#536a76" text-anchor="start">Deployment rollback does not restore a changed shared ConfigMap, certificate, Gateway or DNS record.</text>
 </svg>

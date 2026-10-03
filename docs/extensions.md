@@ -1,25 +1,35 @@
-# Optional extension patterns
+# Installed application extensions
 
-## A second site on the shared VIP
+These notes describe the installed four-node lab. The fresh two-VM wiki acceptance run did not rebuild or retest Ledger, NFS or the egress extension. Selected nonsecret policies are linked from the [lab reference](lab-reference.md).
 
-An illustrative Gateway `example-site/site-gateway` selects a one-address pool at10.60.10.100. Example site uses an HTTPS listener with TLS termination and an HTTPRoute to `site-web:80`. Wiki uses a TLS passthrough listener and TLSRoute to `lab-wiki:443`, where Nginx has the certificate. Both hostnames resolve to the same VIP. Each listener restricts allowed route namespaces, and a frontend Cilium policy restricts HTTPS sources to intended LAN/VPN ranges.
+## Two sites on one address
 
-To add a site, deploy and verify its ClusterIP Service first. Generate its certificate through your trusted CA. Add a distinct hostname/listener to the maintained Gateway, with the intended TLS mode and namespace permissions, then create the matching route and DNS A record. Validate route conditions and curl with SNI before exposing it. Preserve existing listeners; do not replace a live Gateway with an older reference export.
+Gateway `architects-ledger/ledger-private` uses `10.50.10.100`. Ledger's HTTPS listener terminates TLS and an HTTPRoute selects `ledger-web:80`; the container serves HTTP on 8080. Wiki uses a TLS passthrough listener and TLSRoute to `lab-wiki:443`; Nginx serves TLS on 8443. Both names resolve to the VIP, and both HTTP listeners redirect to HTTPS.
 
-Use distinct selectors and source policies for your own Gateway. Restrict the walkthrough's access separately before turning it into a durable service.
+To add a site, deploy and verify its ClusterIP Service first. Obtain its certificate through your trusted CA. Add a distinct hostname/listener to the maintained Gateway with the intended TLS mode and allowed route namespaces. Create the matching route and verify its conditions and an SNI-preserving HTTPS request before publishing DNS. Preserve other sites' listeners when editing a shared Gateway.
 
-## Persistent NFS
+The pool and L2 policy select the Gateway's generated Service. Keep `externalTrafficPolicy: Cluster` for this setup; the announcing worker may not have a backend pod. See [Cilium L2 announcements](https://docs.cilium.io/en/stable/network/l2-announcements/). Source policy and application authentication are separate decisions.
 
-The static wiki needs no PVC. Example site uses a static PV/PVC backed by NAS 192.0.2.25:/NFS/kubernetes/example-site, RWX and Retain, declared 5 GiB. Its three web replicas mount data read-only with UID/GID 1000. The storage class `static-nfs` uses `kubernetes.io/no-provisioner`; no CSI/dynamic provisioner is part of this design. Another PVC does not automatically create a directory or NAS quota. Install NFS client support on consumers and verify permissions, backup and restore independently.
+## Persistent NFS for Ledger
 
-## Scoped outbound jobs
+Architect's Ledger moved from Docker to Kubernetes. Its static PV `architects-ledger-qnap` and PVC `architects-ledger/ledger-data` use `172.27.85.25:/NFS/kubernetes/architects-ledger`, RWX and `Retain`, with declared capacity 5 GiB. Three web replicas mount the files read-only with UID/GID 1000. StorageClass `ledger-qnap` uses `kubernetes.io/no-provisioner`.
 
-An example egress policy can select only `example-site` pods labeled `app=scheduled-worker`. Their public traffic exits through node-c, SNAT address 10.60.10.14. RFC1918, loopback and link-local destinations are excluded. Separate NetworkPolicies allow CoreDNS and public HTTPS while denying tested HTTP 80/private LAN paths. An egress gateway selects a path; it does not replace traffic authorization.
+Another PVC does not create a NAS directory or enforce a quota. Install NFS client support on consuming nodes and check NAS export permissions, filesystem ownership and restore procedures. Retain the data when changing Kubernetes objects; `Retain` does not create a backup. The web replicas still share one NAS dependency.
 
-An egress policy depends on matching labels, namespace, Cilium egress-gateway/BPF-masquerade settings and node reachability. The fresh wiki acceptance cluster did not enable or retest this extension. Reproduce selection and permit/deny probes before claiming it works in another environment. Validate a selected job on one node and inspect NAT state on the chosen egress node. No egress-node failover result is established by the fresh wiki test.
+The static wiki reconstructs its content in `emptyDir` from immutable ConfigMaps and needs no PVC. Its source and dependency lock are the durable build inputs.
 
-See the [Cilium egress gateway guide](https://docs.cilium.io/en/stable/network/egress-gateway/egress-gateway/) for requirements.
+## Selected outbound jobs
 
-## Failure scope
+`ledger-worker-egress` selects only namespace `architects-ledger` and label `app=ledger-worker`. Public IPv4 traffic uses worker3 and is SNATed to `10.50.10.14`. RFC1918, loopback and link-local destinations are excluded from that egress-gateway path. The wiki and Ledger web pods do not match the selector.
 
-A worker VIP-election test does not cover loss of Proxmox quorum, the sole API/etcd node, the direct cable, Upstream router's fixed next hop, DNS 1's writable API, NAS, or the chosen egress worker. Keep these dependencies visible in the architecture and recovery plan. A two-vote Proxmox cluster requires both nodes for quorum unless you implement an appropriate quorum design.
+A separate NetworkPolicy allows CoreDNS on TCP/UDP 53 and public TCP 443, excluding those private/special ranges from the HTTPS rule. An egress-gateway exclusion changes routing; it does not deny traffic. Read all matching policies when evaluating access because policy allows can be additive.
+
+The original probe ran on worker1. Public HTTPS returned 200; the tested public HTTP 80 and private-LAN attempts were blocked. worker3's NAT map showed the expected source translation. An Internet IP echo alone could not prove the chosen worker because upstream NAT rewrites the address again.
+
+This extension requires Cilium egress-gateway and BPF masquerading settings plus correct labels and node reachability. The wiki-only bootstrap does not enable it. Consult [Cilium's egress gateway requirements](https://docs.cilium.io/en/stable/network/egress-gateway/egress-gateway/) before adding it. Repeat permit/deny probes from a selected pod on another node and inspect the selected gateway's NAT state.
+
+## What the worker-pause test covers
+
+The incoming VIP's lease moved from worker1 to worker3 at the 22.1-second sample; both sites returned HTTPS 200 by the 38-second sample. This was a controlled worker VM pause and recovery. It does not establish loss-of-host recovery, uninterrupted existing connections, control-plane HA or egress-node failover.
+
+Firewalla's fixed next hop through pve1 remains. Part 3 is planned around replacing pve1's troubled boot drive and testing a floating upstream IP with Keepalived/VRRP during that maintenance window. The routing tests will include pve2, the return path and client recovery. The single Kubernetes control plane remains a separate dependency. No Keepalived configuration is deployed by this repository.

@@ -1,0 +1,26 @@
+# Audited 2026-09-28. Review live objects before applying; contains no Secrets.
+apiVersion: cilium.io/v2
+kind: CiliumClusterwideNetworkPolicy
+spec:
+  endpointSelector:
+    matchLabels:
+      reserved:ingress: ''
+  ingress:
+  - fromCIDR:
+    - 10.0.0.0/8
+    - 172.16.0.0/12
+    - 192.168.0.0/16
+    toPorts:
+    - ports:
+      - port: '80'
+        protocol: TCP
+  - fromCIDR:
+    - 172.27.85.0/24
+    - 192.168.85.0/24
+    - 10.189.217.0/24
+    toPorts:
+    - ports:
+      - port: '443'
+        protocol: TCP
+metadata:
+  name: private-gateway-clients

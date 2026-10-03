@@ -3,8 +3,8 @@
 set -euo pipefail
 : "${NODE_IP:?Set NODE_IP to this control plane static address}"
 : "${API_ENDPOINT:=$NODE_IP}"
-: "${POD_CIDR:=10.240.0.0/16}"
-: "${SERVICE_CIDR:=10.112.0.0/12}"
+: "${POD_CIDR:=10.244.0.0/16}"
+: "${SERVICE_CIDR:=10.96.0.0/12}"
 cat > /tmp/guide-kubeadm.yaml <<CONFIG
 apiVersion: kubeadm.k8s.io/v1beta4
 kind: InitConfiguration

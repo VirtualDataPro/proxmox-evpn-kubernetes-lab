@@ -1,37 +1,41 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="1600" height="930" viewBox="0 0 1600 930">
-<defs><marker id="arrow" markerWidth="10" markerHeight="10" refX="8" refY="5" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10" fill="#526975"/></marker></defs>
-<rect width="1600" height="930" fill="#f6f9fb"/>
-<text x="60" y="62" font-family="DejaVu Sans, sans-serif" font-size="34" fill="#152d37" font-weight="700" text-anchor="start">Re-IP the lab in stages</text>
-<text x="60" y="103" font-family="DejaVu Sans, sans-serif" font-size="21" fill="#526975" font-weight="400" text-anchor="start">Illustrative staged migration • 198.51.100.0/24 → 192.0.2.0/24</text>
-<rect x="60" y="180" width="460" height="150" rx="12" fill="white" stroke="#147d64" stroke-width="2"/>
-<text x="78" y="212" font-family="DejaVu Sans, sans-serif" font-size="23" fill="#147d64" font-weight="700" text-anchor="start">1  Admin workstation second NIC</text>
-<text x="78" y="244" font-family="DejaVu Sans, sans-serif" font-size="20" fill="#152d37" font-weight="400" text-anchor="start">Add the NIC before changing</text>
-<text x="78" y="272" font-family="DejaVu Sans, sans-serif" font-size="20" fill="#152d37" font-weight="400" text-anchor="start">the rest of the environment</text>
-<rect x="570" y="180" width="460" height="150" rx="12" fill="white" stroke="#147d64" stroke-width="2"/>
-<text x="588" y="212" font-family="DejaVu Sans, sans-serif" font-size="23" fill="#147d64" font-weight="700" text-anchor="start">2  Switch management IP</text>
-<text x="588" y="244" font-family="DejaVu Sans, sans-serif" font-size="20" fill="#152d37" font-weight="400" text-anchor="start">Update the switch address</text>
-<text x="588" y="272" font-family="DejaVu Sans, sans-serif" font-size="20" fill="#152d37" font-weight="400" text-anchor="start">before moving the gateway</text>
-<rect x="1080" y="180" width="460" height="150" rx="12" fill="white" stroke="#147d64" stroke-width="2"/>
-<text x="1098" y="212" font-family="DejaVu Sans, sans-serif" font-size="23" fill="#147d64" font-weight="700" text-anchor="start">3  Network gateway</text>
-<text x="1098" y="244" font-family="DejaVu Sans, sans-serif" font-size="20" fill="#152d37" font-weight="400" text-anchor="start">Move the network gateway</text>
-<text x="1098" y="272" font-family="DejaVu Sans, sans-serif" font-size="20" fill="#152d37" font-weight="400" text-anchor="start">to the new addressing</text>
-<rect x="1080" y="460" width="460" height="150" rx="12" fill="white" stroke="#147d64" stroke-width="2"/>
-<text x="1098" y="492" font-family="DejaVu Sans, sans-serif" font-size="23" fill="#147d64" font-weight="700" text-anchor="start">4  NFS / Proxmox / workloads</text>
-<text x="1098" y="524" font-family="DejaVu Sans, sans-serif" font-size="20" fill="#152d37" font-weight="400" text-anchor="start">Update hosts manually; use tooling</text>
-<text x="1098" y="552" font-family="DejaVu Sans, sans-serif" font-size="20" fill="#152d37" font-weight="400" text-anchor="start">to update dependent systems</text>
-<rect x="570" y="460" width="460" height="150" rx="12" fill="white" stroke="#147d64" stroke-width="2"/>
-<text x="588" y="492" font-family="DejaVu Sans, sans-serif" font-size="23" fill="#147d64" font-weight="700" text-anchor="start">5  Monitoring and other servers</text>
-<text x="588" y="524" font-family="DejaVu Sans, sans-serif" font-size="20" fill="#152d37" font-weight="400" text-anchor="start">Update Grafana / Prometheus targets</text>
-<text x="588" y="552" font-family="DejaVu Sans, sans-serif" font-size="20" fill="#152d37" font-weight="400" text-anchor="start">Re-IP the remaining servers</text>
-<polyline points="520,255 570,255" fill="none" stroke="#526975" stroke-width="3" marker-end="url(#arrow)"/>
-<polyline points="1030,255 1080,255" fill="none" stroke="#526975" stroke-width="3" marker-end="url(#arrow)"/>
-<polyline points="1310,330 1310,460" fill="none" stroke="#526975" stroke-width="3" marker-end="url(#arrow)"/>
-<polyline points="1080,535 1030,535" fill="none" stroke="#526975" stroke-width="3" marker-end="url(#arrow)"/>
-<rect x="60" y="460" width="460" height="150" rx="12" fill="white" stroke="#a56420" stroke-width="2"/>
-<text x="78" y="492" font-family="DejaVu Sans, sans-serif" font-size="23" fill="#a56420" font-weight="700" text-anchor="start">Reader verification</text>
-<text x="78" y="524" font-family="DejaVu Sans, sans-serif" font-size="20" fill="#152d37" font-weight="400" text-anchor="start">Check storage, DNS, cluster health</text>
-<text x="78" y="552" font-family="DejaVu Sans, sans-serif" font-size="20" fill="#152d37" font-weight="400" text-anchor="start">and monitoring after changes</text>
-<polyline points="570,535 520,535" fill="none" stroke="#526975" stroke-width="3" marker-end="url(#arrow)"/>
-<text x="60" y="865" font-family="DejaVu Sans, sans-serif" font-size="18" fill="#526975" font-weight="400" text-anchor="start">Illustrative migration order. Validate each dependency and record actual outages in your own environment.</text>
-<text x="60" y="892" font-family="DejaVu Sans, sans-serif" font-size="18" fill="#526975" font-weight="400" text-anchor="start">Second-NIC addresses, route selection, and exact switch/gateway cutover settings still need the original configuration.</text>
+<svg xmlns="http://www.w3.org/2000/svg" width="1400" height="1080" viewBox="0 0 1400 1080" role="img">
+<title>Re-IP the lab while retaining an access path</title><desc>192.168.1.0/24 → 172.27.85.0/24  ·  Prompted by overlapping networks while on VPN.</desc>
+<defs><marker id="arr" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse"><path d="M0 0L10 5L0 10Z" fill="#536a76"/></marker></defs>
+<rect width="1400" height="1080" fill="#f7f9f7"/>
+<text x="52" y="48" font-family="DejaVu Sans,sans-serif" font-size="18" font-weight="700" fill="#087e80" text-anchor="start">PROXMOX LAB  /  PART 2</text>
+<text x="1348" y="48" font-family="DejaVu Sans,sans-serif" font-size="18" font-weight="700" fill="#087e80" text-anchor="end">05</text>
+<text x="52" y="104" font-family="DejaVu Sans,sans-serif" font-size="39" font-weight="700" fill="#142f3d" text-anchor="start">Re-IP the lab while retaining an access path</text>
+<text x="52" y="145" font-family="DejaVu Sans,sans-serif" font-size="23" font-weight="400" fill="#536a76" text-anchor="start">192.168.1.0/24 → 172.27.85.0/24  ·  Prompted by overlapping networks while on VPN.</text>
+<circle cx="91" cy="245" r="30" fill="#087e80"/>
+<text x="91" y="254" font-family="DejaVu Sans,sans-serif" font-size="27" font-weight="700" fill="white" text-anchor="middle">1</text>
+<rect x="154" y="196" width="1194" height="119" rx="10" fill="white" stroke="#d5dfdf" stroke-width="2"/><rect x="154" y="208" width="5" height="95" rx="2" fill="#2a62a2"/>
+<text x="176" y="233" font-family="DejaVu Sans,sans-serif" font-size="25" font-weight="700" fill="#2a62a2" text-anchor="start">Give RougarouOS a second NIC</text>
+<text x="176" y="269" font-family="DejaVu Sans,sans-serif" font-size="22" font-weight="400" fill="#142f3d" text-anchor="start">Checkpoint: console access and the intended route are available.</text>
+<polyline points="91,276 91,317" fill="none" stroke="#536a76" stroke-width="3" marker-end="url(#arr)"/>
+<circle cx="91" cy="396" r="30" fill="#087e80"/>
+<text x="91" y="405" font-family="DejaVu Sans,sans-serif" font-size="27" font-weight="700" fill="white" text-anchor="middle">2</text>
+<rect x="154" y="347" width="1194" height="119" rx="10" fill="white" stroke="#d5dfdf" stroke-width="2"/><rect x="154" y="359" width="5" height="95" rx="2" fill="#2a62a2"/>
+<text x="176" y="384" font-family="DejaVu Sans,sans-serif" font-size="25" font-weight="700" fill="#2a62a2" text-anchor="start">Change the switch management address</text>
+<text x="176" y="420" font-family="DejaVu Sans,sans-serif" font-size="22" font-weight="400" fill="#142f3d" text-anchor="start">Checkpoint: reach the switch on its new management address.</text>
+<polyline points="91,427 91,468" fill="none" stroke="#536a76" stroke-width="3" marker-end="url(#arr)"/>
+<circle cx="91" cy="547" r="30" fill="#087e80"/>
+<text x="91" y="556" font-family="DejaVu Sans,sans-serif" font-size="27" font-weight="700" fill="white" text-anchor="middle">3</text>
+<rect x="154" y="498" width="1194" height="119" rx="10" fill="white" stroke="#d5dfdf" stroke-width="2"/><rect x="154" y="510" width="5" height="95" rx="2" fill="#2a62a2"/>
+<text x="176" y="535" font-family="DejaVu Sans,sans-serif" font-size="25" font-weight="700" fill="#2a62a2" text-anchor="start">Move the network gateway</text>
+<text x="176" y="571" font-family="DejaVu Sans,sans-serif" font-size="22" font-weight="400" fill="#142f3d" text-anchor="start">Checkpoint: management routing and external DNS / HTTPS work.</text>
+<polyline points="91,578 91,619" fill="none" stroke="#536a76" stroke-width="3" marker-end="url(#arr)"/>
+<circle cx="91" cy="698" r="30" fill="#087e80"/>
+<text x="91" y="707" font-family="DejaVu Sans,sans-serif" font-size="27" font-weight="700" fill="white" text-anchor="middle">4</text>
+<rect x="154" y="649" width="1194" height="119" rx="10" fill="white" stroke="#d5dfdf" stroke-width="2"/><rect x="154" y="661" width="5" height="95" rx="2" fill="#2a62a2"/>
+<text x="176" y="686" font-family="DejaVu Sans,sans-serif" font-size="25" font-weight="700" fill="#2a62a2" text-anchor="start">Move NFS, Proxmox and other workloads</text>
+<text x="176" y="722" font-family="DejaVu Sans,sans-serif" font-size="22" font-weight="400" fill="#142f3d" text-anchor="start">Proxmox nodes: manual changes, about one hour of work.</text>
+<polyline points="91,729 91,770" fill="none" stroke="#536a76" stroke-width="3" marker-end="url(#arr)"/>
+<circle cx="91" cy="849" r="30" fill="#087e80"/>
+<text x="91" y="858" font-family="DejaVu Sans,sans-serif" font-size="27" font-weight="700" fill="white" text-anchor="middle">5</text>
+<rect x="154" y="800" width="1194" height="119" rx="10" fill="white" stroke="#d5dfdf" stroke-width="2"/><rect x="154" y="812" width="5" height="95" rx="2" fill="#2a62a2"/>
+<text x="176" y="837" font-family="DejaVu Sans,sans-serif" font-size="25" font-weight="700" fill="#2a62a2" text-anchor="start">Update monitoring and remaining servers</text>
+<text x="176" y="873" font-family="DejaVu Sans,sans-serif" font-size="22" font-weight="400" fill="#142f3d" text-anchor="start">Checkpoint: revise targets, DNS, storage references and inventory.</text>
+<path d="M52 989H1348" stroke="#d5dfdf" stroke-width="2"/>
+<text x="52" y="1025" font-family="DejaVu Sans,sans-serif" font-size="20" font-weight="400" fill="#536a76" text-anchor="start">Sequence from the author’s account. Checkpoints are guidance for repeating it, not recovered command history.</text>
+<text x="52" y="1055" font-family="DejaVu Sans,sans-serif" font-size="20" font-weight="400" fill="#536a76" text-anchor="start">The one-hour estimate covers manual Proxmox re-IP work; it is not a measured service-outage duration.</text>
 </svg>

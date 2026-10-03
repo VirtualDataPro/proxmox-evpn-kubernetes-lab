@@ -1,0 +1,28 @@
+# Audited 2026-09-28. Review live objects before applying; contains no Secrets.
+apiVersion: cilium.io/v2
+kind: CiliumLoadBalancerIPPool
+spec:
+  blocks:
+  - start: 10.50.10.100
+    stop: 10.50.10.100
+  disabled: false
+  serviceSelector:
+    matchLabels:
+      io.cilium.gateway/owning-gateway: ledger-private
+metadata:
+  name: lab-ingress-vip
+---
+apiVersion: cilium.io/v2alpha1
+kind: CiliumL2AnnouncementPolicy
+spec:
+  interfaces:
+  - ^eth0$
+  loadBalancerIPs: true
+  nodeSelector:
+    matchLabels:
+      node-role.kubernetes.io/worker: ''
+  serviceSelector:
+    matchLabels:
+      io.cilium.gateway/owning-gateway: ledger-private
+metadata:
+  name: lab-ingress-vip

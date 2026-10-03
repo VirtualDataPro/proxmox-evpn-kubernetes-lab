@@ -6,6 +6,6 @@
     "kubeadm join-token pattern",
     "known lab credential values"
   ],
-  "files_checked": 21,
+  "files_checked": 37,
   "credential_matches": []
 }

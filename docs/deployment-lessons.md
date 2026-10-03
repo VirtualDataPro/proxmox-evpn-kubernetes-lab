@@ -1,6 +1,6 @@
 # Lessons from the original four-node deployment
 
-These are summaries of retained private workspace records from the original deployment. They supplement the later disposable two-VM acceptance run; they are not new tests of the generic addresses in this repository. Raw logs and internal identities stay in the private author package.
+These are summaries of retained private workspace records from the original deployment. They supplement the later disposable two-VM acceptance run; they do not expand the scope of that test. Published addresses match the lab; raw logs and private workspace state stay in the author package.
 
 ## Prepare a rollback before replacing a guest
 

@@ -1,46 +1,39 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="1600" height="1050" viewBox="0 0 1600 1050">
-<defs><marker id="arrow" markerWidth="10" markerHeight="10" refX="8" refY="5" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10" fill="#526975"/></marker></defs>
-<rect width="1600" height="1050" fill="#f6f9fb"/>
-<text x="60" y="62" font-family="DejaVu Sans, sans-serif" font-size="34" fill="#152d37" font-weight="700" text-anchor="start">How clients reach the websites</text>
-<text x="60" y="103" font-family="DejaVu Sans, sans-serif" font-size="21" fill="#526975" font-weight="400" text-anchor="start">DNS selects the shared VIP • Cilium routes by hostname/SNI • TLS ownership differs by application</text>
-<rect x="60" y="170" width="410" height="120" rx="12" fill="white" stroke="#286ca6" stroke-width="2"/>
-<text x="78" y="202" font-family="DejaVu Sans, sans-serif" font-size="23" fill="#286ca6" font-weight="700" text-anchor="start">Client</text>
-<text x="78" y="234" font-family="DejaVu Sans, sans-serif" font-size="20" fill="#152d37" font-weight="400" text-anchor="start">LAN / laptop / VPN</text>
-<text x="78" y="262" font-family="DejaVu Sans, sans-serif" font-size="20" fill="#152d37" font-weight="400" text-anchor="start">Uses Upstream router-backed lab DNS</text>
-<rect x="590" y="170" width="450" height="120" rx="12" fill="white" stroke="#286ca6" stroke-width="2"/>
-<text x="608" y="202" font-family="DejaVu Sans, sans-serif" font-size="23" fill="#286ca6" font-weight="700" text-anchor="start">DNS lookup</text>
-<text x="608" y="234" font-family="DejaVu Sans, sans-serif" font-size="20" fill="#152d37" font-weight="400" text-anchor="start">wiki.demo.home.arpa and site.demo.home.arpa</text>
-<text x="608" y="262" font-family="DejaVu Sans, sans-serif" font-size="20" fill="#152d37" font-weight="400" text-anchor="start">Both return 10.60.10.100</text>
-<polyline points="470,230 590,230" fill="none" stroke="#526975" stroke-width="3" marker-end="url(#arrow)"/>
-<text x="477" y="209" font-family="DejaVu Sans, sans-serif" font-size="19" fill="#526975" font-weight="400" text-anchor="start">Resolve name</text>
-<rect x="60" y="400" width="410" height="120" rx="12" fill="white" stroke="#286ca6" stroke-width="2"/>
-<text x="78" y="432" font-family="DejaVu Sans, sans-serif" font-size="23" fill="#286ca6" font-weight="700" text-anchor="start">Upstream router → hv-a</text>
-<text x="78" y="464" font-family="DejaVu Sans, sans-serif" font-size="20" fill="#152d37" font-weight="400" text-anchor="start">10.60.10.0/24 routed via</text>
-<text x="78" y="492" font-family="DejaVu Sans, sans-serif" font-size="20" fill="#152d37" font-weight="400" text-anchor="start">192.0.2.11 → EVPN</text>
-<polyline points="265,290 265,400" fill="none" stroke="#526975" stroke-width="3" marker-end="url(#arrow)"/>
-<rect x="590" y="400" width="450" height="120" rx="12" fill="white" stroke="#147d64" stroke-width="2"/>
-<text x="608" y="432" font-family="DejaVu Sans, sans-serif" font-size="23" fill="#147d64" font-weight="700" text-anchor="start">Shared VIP • 10.60.10.100</text>
-<text x="608" y="464" font-family="DejaVu Sans, sans-serif" font-size="20" fill="#152d37" font-weight="400" text-anchor="start">One elected worker announces ARP</text>
-<text x="608" y="492" font-family="DejaVu Sans, sans-serif" font-size="20" fill="#152d37" font-weight="400" text-anchor="start">Gateway Service → Cilium Envoy</text>
-<polyline points="470,460 590,460" fill="none" stroke="#526975" stroke-width="3" marker-end="url(#arrow)"/>
-<text x="484" y="438" font-family="DejaVu Sans, sans-serif" font-size="19" fill="#526975" font-weight="400" text-anchor="start">TCP 443</text>
-<rect x="1130" y="290" width="410" height="170" rx="12" fill="white" stroke="#147d64" stroke-width="2"/>
-<text x="1148" y="322" font-family="DejaVu Sans, sans-serif" font-size="23" fill="#147d64" font-weight="700" text-anchor="start">Wiki • lab-wiki</text>
-<text x="1148" y="354" font-family="DejaVu Sans, sans-serif" font-size="20" fill="#152d37" font-weight="400" text-anchor="start">TLSRoute selects wiki SNI</text>
-<text x="1148" y="382" font-family="DejaVu Sans, sans-serif" font-size="20" fill="#152d37" font-weight="400" text-anchor="start">TLS passthrough → Nginx :443</text>
-<text x="1148" y="410" font-family="DejaVu Sans, sans-serif" font-size="20" fill="#152d37" font-weight="400" text-anchor="start">2 replicas across physical hosts</text>
-<rect x="1130" y="575" width="410" height="170" rx="12" fill="white" stroke="#147d64" stroke-width="2"/>
-<text x="1148" y="607" font-family="DejaVu Sans, sans-serif" font-size="23" fill="#147d64" font-weight="700" text-anchor="start">Example site • example-site</text>
-<text x="1148" y="639" font-family="DejaVu Sans, sans-serif" font-size="20" fill="#152d37" font-weight="400" text-anchor="start">TLS terminates at Cilium</text>
-<text x="1148" y="667" font-family="DejaVu Sans, sans-serif" font-size="20" fill="#152d37" font-weight="400" text-anchor="start">HTTPRoute → site-web :80</text>
-<text x="1148" y="695" font-family="DejaVu Sans, sans-serif" font-size="20" fill="#152d37" font-weight="400" text-anchor="start">3 web replicas → NAS NFS</text>
-<polyline points="1040,460 1080,460 1080,375 1130,375" fill="none" stroke="#526975" stroke-width="3" marker-end="url(#arrow)"/>
-<polyline points="1040,460 1080,460 1080,660 1130,660" fill="none" stroke="#526975" stroke-width="3" marker-end="url(#arrow)"/>
-<rect x="590" y="730" width="450" height="120" rx="12" fill="white" stroke="#a56420" stroke-width="2"/>
-<text x="608" y="762" font-family="DejaVu Sans, sans-serif" font-size="23" fill="#a56420" font-weight="700" text-anchor="start">Control plane • cp-a</text>
-<text x="608" y="794" font-family="DejaVu Sans, sans-serif" font-size="20" fill="#152d37" font-weight="400" text-anchor="start">Kubernetes Lease supports elections</text>
-<text x="608" y="822" font-family="DejaVu Sans, sans-serif" font-size="20" fill="#152d37" font-weight="400" text-anchor="start">API needed for ownership changes</text>
-<polyline points="815,730 815,520" fill="none" stroke="#526975" stroke-width="3" marker-end="url(#arrow)" stroke-dasharray="8 7"/>
-<text x="60" y="985" font-family="DejaVu Sans, sans-serif" font-size="18" fill="#526975" font-weight="400" text-anchor="start">HTTPS source policy permits the documented management LAN, laptop LAN, and VPN; HTTP redirects to HTTPS.</text>
-<text x="60" y="1012" font-family="DejaVu Sans, sans-serif" font-size="18" fill="#526975" font-weight="400" text-anchor="start">Measured worker failover: lease acquired ~22 s; both sites recovered by ~38 s. This does not prove physical-host HA.</text>
+<svg xmlns="http://www.w3.org/2000/svg" width="1400" height="1070" viewBox="0 0 1400 1070" role="img">
+<title>One VIP, two HTTPS backends</title><desc>Installed websites • The elected worker and the application pod can be different nodes.</desc>
+<defs><marker id="arr" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse"><path d="M0 0L10 5L0 10Z" fill="#536a76"/></marker></defs>
+<rect width="1400" height="1070" fill="#f7f9f7"/>
+<text x="52" y="48" font-family="DejaVu Sans,sans-serif" font-size="18" font-weight="700" fill="#087e80" text-anchor="start">PROXMOX LAB  /  PART 2</text>
+<text x="1348" y="48" font-family="DejaVu Sans,sans-serif" font-size="18" font-weight="700" fill="#087e80" text-anchor="end">02</text>
+<text x="52" y="104" font-family="DejaVu Sans,sans-serif" font-size="39" font-weight="700" fill="#142f3d" text-anchor="start">One VIP, two HTTPS backends</text>
+<text x="52" y="145" font-family="DejaVu Sans,sans-serif" font-size="23" font-weight="400" fill="#536a76" text-anchor="start">Installed websites • The elected worker and the application pod can be different nodes.</text>
+<rect x="52" y="196" width="550" height="136" rx="10" fill="white" stroke="#d5dfdf" stroke-width="2"/><rect x="52" y="208" width="5" height="112" rx="2" fill="#2a62a2"/>
+<text x="74" y="233" font-family="DejaVu Sans,sans-serif" font-size="25" font-weight="700" fill="#2a62a2" text-anchor="start">Client uses lab DNS</text>
+<text x="74" y="269" font-family="DejaVu Sans,sans-serif" font-size="22" font-weight="400" fill="#142f3d" text-anchor="start">wiki.lab.local · ledger.lab.local</text>
+<text x="74" y="300" font-family="DejaVu Sans,sans-serif" font-size="22" font-weight="400" fill="#142f3d" text-anchor="start">Both return 10.50.10.100</text>
+<rect x="798" y="196" width="550" height="136" rx="10" fill="white" stroke="#d5dfdf" stroke-width="2"/><rect x="798" y="208" width="5" height="112" rx="2" fill="#2a62a2"/>
+<text x="820" y="233" font-family="DejaVu Sans,sans-serif" font-size="25" font-weight="700" fill="#2a62a2" text-anchor="start">Firewalla routes to pve1</text>
+<text x="820" y="269" font-family="DejaVu Sans,sans-serif" font-size="22" font-weight="400" fill="#142f3d" text-anchor="start">172.27.85.11 → evpn1 → evpntest</text>
+<polyline points="602,253 798,253" fill="none" stroke="#536a76" stroke-width="3" marker-end="url(#arr)"/>
+<rect x="370" y="388" width="660" height="140" rx="10" fill="white" stroke="#d5dfdf" stroke-width="2"/><rect x="370" y="400" width="5" height="116" rx="2" fill="#087e80"/>
+<text x="392" y="425" font-family="DejaVu Sans,sans-serif" font-size="25" font-weight="700" fill="#087e80" text-anchor="start">Cilium Gateway  /  10.50.10.100</text>
+<text x="392" y="461" font-family="DejaVu Sans,sans-serif" font-size="22" font-weight="400" fill="#142f3d" text-anchor="start">LB-IPAM allocates · one worker answers ARP</text>
+<text x="392" y="492" font-family="DejaVu Sans,sans-serif" font-size="22" font-weight="400" fill="#142f3d" text-anchor="start">Cilium Envoy selects the application by hostname</text>
+<polyline points="1073,332 1073,354 890,354 890,388" fill="none" stroke="#536a76" stroke-width="3" marker-end="url(#arr)"/>
+<rect x="52" y="626" width="610" height="185" rx="10" fill="white" stroke="#d5dfdf" stroke-width="2"/><rect x="52" y="638" width="5" height="161" rx="2" fill="#087e80"/>
+<text x="74" y="663" font-family="DejaVu Sans,sans-serif" font-size="25" font-weight="700" fill="#087e80" text-anchor="start">wiki.lab.local  /  TLS passthrough</text>
+<text x="74" y="699" font-family="DejaVu Sans,sans-serif" font-size="22" font-weight="400" fill="#142f3d" text-anchor="start">TLSRoute → lab-wiki Service :443</text>
+<text x="74" y="730" font-family="DejaVu Sans,sans-serif" font-size="22" font-weight="400" fill="#142f3d" text-anchor="start">Nginx terminates TLS on container port 8443</text>
+<text x="74" y="761" font-family="DejaVu Sans,sans-serif" font-size="22" font-weight="400" fill="#142f3d" text-anchor="start">Two replicas across pve1 / pve2</text>
+<rect x="738" y="626" width="610" height="185" rx="10" fill="white" stroke="#d5dfdf" stroke-width="2"/><rect x="738" y="638" width="5" height="161" rx="2" fill="#2a62a2"/>
+<text x="760" y="663" font-family="DejaVu Sans,sans-serif" font-size="25" font-weight="700" fill="#2a62a2" text-anchor="start">ledger.lab.local  /  TLS termination</text>
+<text x="760" y="699" font-family="DejaVu Sans,sans-serif" font-size="22" font-weight="400" fill="#142f3d" text-anchor="start">Certificate at Cilium · HTTPRoute selects backend</text>
+<text x="760" y="730" font-family="DejaVu Sans,sans-serif" font-size="22" font-weight="400" fill="#142f3d" text-anchor="start">ledger-web Service :80 → web pods</text>
+<text x="760" y="761" font-family="DejaVu Sans,sans-serif" font-size="22" font-weight="400" fill="#142f3d" text-anchor="start">Three web replicas · shared NFS</text>
+<polyline points="535,528 535,576 357,576 357,626" fill="none" stroke="#536a76" stroke-width="3" marker-end="url(#arr)"/>
+<polyline points="865,528 865,576 1043,576 1043,626" fill="none" stroke="#536a76" stroke-width="3" marker-end="url(#arr)"/>
+<text x="700" y="867" font-family="DejaVu Sans,sans-serif" font-size="23" font-weight="700" fill="#9b6225" text-anchor="middle">cp1 API supports Lease elections  ·  externalTrafficPolicy: Cluster</text>
+<text x="700" y="910" font-family="DejaVu Sans,sans-serif" font-size="21" font-weight="400" fill="#536a76" text-anchor="middle">HTTP redirects to HTTPS. Gateway source policy permits the intended LAN / VPN ranges.</text>
+<path d="M52 979H1348" stroke="#d5dfdf" stroke-width="2"/>
+<text x="52" y="1015" font-family="DejaVu Sans,sans-serif" font-size="20" font-weight="400" fill="#536a76" text-anchor="start">Worker-pause test: new holder observed at 22.1 s; both HTTPS sites returned 200 by 38 s.</text>
+<text x="52" y="1045" font-family="DejaVu Sans,sans-serif" font-size="20" font-weight="400" fill="#536a76" text-anchor="start">A new announcer does not remove Firewalla’s fixed upstream next hop through pve1.</text>
 </svg>

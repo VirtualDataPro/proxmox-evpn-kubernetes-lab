@@ -5,8 +5,8 @@ metadata:
   name: wiki-guide
 spec:
   blocks:
-    - start: 10.60.10.210
-      stop: 10.60.10.210
+    - start: 10.50.10.210
+      stop: 10.50.10.210
   serviceSelector:
     matchLabels:
       io.cilium.gateway/owning-gateway: wiki-guide
@@ -34,7 +34,7 @@ spec:
   gatewayClassName: cilium
   listeners:
     - name: wiki-tls
-      hostname: wiki.demo.test
+      hostname: wiki.guide.test
       port: 443
       protocol: TLS
       tls:
@@ -43,7 +43,7 @@ spec:
         namespaces:
           from: Same
     - name: wiki-http
-      hostname: wiki.demo.test
+      hostname: wiki.guide.test
       port: 80
       protocol: HTTP
       allowedRoutes:
@@ -59,7 +59,7 @@ spec:
   parentRefs:
     - name: wiki-guide
       sectionName: wiki-tls
-  hostnames: [wiki.demo.test]
+  hostnames: [wiki.guide.test]
   rules:
     - backendRefs:
         - name: lab-wiki
@@ -74,7 +74,7 @@ spec:
   parentRefs:
     - name: wiki-guide
       sectionName: wiki-http
-  hostnames: [wiki.demo.test]
+  hostnames: [wiki.guide.test]
   rules:
     - filters:
         - type: RequestRedirect
