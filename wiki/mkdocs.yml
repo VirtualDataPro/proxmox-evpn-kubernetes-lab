@@ -1,0 +1,7 @@
+site_name: My Proxmox Kubernetes Wiki
+use_directory_urls: true
+theme:
+  name: material
+  font: false
+plugins:
+  - search

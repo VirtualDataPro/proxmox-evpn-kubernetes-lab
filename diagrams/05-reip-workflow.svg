@@ -1,0 +1,37 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1600" height="930" viewBox="0 0 1600 930">
+<defs><marker id="arrow" markerWidth="10" markerHeight="10" refX="8" refY="5" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10" fill="#526975"/></marker></defs>
+<rect width="1600" height="930" fill="#f6f9fb"/>
+<text x="60" y="62" font-family="DejaVu Sans, sans-serif" font-size="34" fill="#152d37" font-weight="700" text-anchor="start">Re-IP the lab in stages</text>
+<text x="60" y="103" font-family="DejaVu Sans, sans-serif" font-size="21" fill="#526975" font-weight="400" text-anchor="start">Illustrative staged migration • 198.51.100.0/24 → 192.0.2.0/24</text>
+<rect x="60" y="180" width="460" height="150" rx="12" fill="white" stroke="#147d64" stroke-width="2"/>
+<text x="78" y="212" font-family="DejaVu Sans, sans-serif" font-size="23" fill="#147d64" font-weight="700" text-anchor="start">1  Admin workstation second NIC</text>
+<text x="78" y="244" font-family="DejaVu Sans, sans-serif" font-size="20" fill="#152d37" font-weight="400" text-anchor="start">Add the NIC before changing</text>
+<text x="78" y="272" font-family="DejaVu Sans, sans-serif" font-size="20" fill="#152d37" font-weight="400" text-anchor="start">the rest of the environment</text>
+<rect x="570" y="180" width="460" height="150" rx="12" fill="white" stroke="#147d64" stroke-width="2"/>
+<text x="588" y="212" font-family="DejaVu Sans, sans-serif" font-size="23" fill="#147d64" font-weight="700" text-anchor="start">2  Switch management IP</text>
+<text x="588" y="244" font-family="DejaVu Sans, sans-serif" font-size="20" fill="#152d37" font-weight="400" text-anchor="start">Update the switch address</text>
+<text x="588" y="272" font-family="DejaVu Sans, sans-serif" font-size="20" fill="#152d37" font-weight="400" text-anchor="start">before moving the gateway</text>
+<rect x="1080" y="180" width="460" height="150" rx="12" fill="white" stroke="#147d64" stroke-width="2"/>
+<text x="1098" y="212" font-family="DejaVu Sans, sans-serif" font-size="23" fill="#147d64" font-weight="700" text-anchor="start">3  Network gateway</text>
+<text x="1098" y="244" font-family="DejaVu Sans, sans-serif" font-size="20" fill="#152d37" font-weight="400" text-anchor="start">Move the network gateway</text>
+<text x="1098" y="272" font-family="DejaVu Sans, sans-serif" font-size="20" fill="#152d37" font-weight="400" text-anchor="start">to the new addressing</text>
+<rect x="1080" y="460" width="460" height="150" rx="12" fill="white" stroke="#147d64" stroke-width="2"/>
+<text x="1098" y="492" font-family="DejaVu Sans, sans-serif" font-size="23" fill="#147d64" font-weight="700" text-anchor="start">4  NFS / Proxmox / workloads</text>
+<text x="1098" y="524" font-family="DejaVu Sans, sans-serif" font-size="20" fill="#152d37" font-weight="400" text-anchor="start">Update hosts manually; use tooling</text>
+<text x="1098" y="552" font-family="DejaVu Sans, sans-serif" font-size="20" fill="#152d37" font-weight="400" text-anchor="start">to update dependent systems</text>
+<rect x="570" y="460" width="460" height="150" rx="12" fill="white" stroke="#147d64" stroke-width="2"/>
+<text x="588" y="492" font-family="DejaVu Sans, sans-serif" font-size="23" fill="#147d64" font-weight="700" text-anchor="start">5  Monitoring and other servers</text>
+<text x="588" y="524" font-family="DejaVu Sans, sans-serif" font-size="20" fill="#152d37" font-weight="400" text-anchor="start">Update Grafana / Prometheus targets</text>
+<text x="588" y="552" font-family="DejaVu Sans, sans-serif" font-size="20" fill="#152d37" font-weight="400" text-anchor="start">Re-IP the remaining servers</text>
+<polyline points="520,255 570,255" fill="none" stroke="#526975" stroke-width="3" marker-end="url(#arrow)"/>
+<polyline points="1030,255 1080,255" fill="none" stroke="#526975" stroke-width="3" marker-end="url(#arrow)"/>
+<polyline points="1310,330 1310,460" fill="none" stroke="#526975" stroke-width="3" marker-end="url(#arrow)"/>
+<polyline points="1080,535 1030,535" fill="none" stroke="#526975" stroke-width="3" marker-end="url(#arrow)"/>
+<rect x="60" y="460" width="460" height="150" rx="12" fill="white" stroke="#a56420" stroke-width="2"/>
+<text x="78" y="492" font-family="DejaVu Sans, sans-serif" font-size="23" fill="#a56420" font-weight="700" text-anchor="start">Reader verification</text>
+<text x="78" y="524" font-family="DejaVu Sans, sans-serif" font-size="20" fill="#152d37" font-weight="400" text-anchor="start">Check storage, DNS, cluster health</text>
+<text x="78" y="552" font-family="DejaVu Sans, sans-serif" font-size="20" fill="#152d37" font-weight="400" text-anchor="start">and monitoring after changes</text>
+<polyline points="570,535 520,535" fill="none" stroke="#526975" stroke-width="3" marker-end="url(#arrow)"/>
+<text x="60" y="865" font-family="DejaVu Sans, sans-serif" font-size="18" fill="#526975" font-weight="400" text-anchor="start">Illustrative migration order. Validate each dependency and record actual outages in your own environment.</text>
+<text x="60" y="892" font-family="DejaVu Sans, sans-serif" font-size="18" fill="#526975" font-weight="400" text-anchor="start">Second-NIC addresses, route selection, and exact switch/gateway cutover settings still need the original configuration.</text>
+</svg>

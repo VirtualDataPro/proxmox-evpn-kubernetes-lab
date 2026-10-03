@@ -1,0 +1,52 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1600" height="1030" viewBox="0 0 1600 1030">
+<defs><marker id="arrow" markerWidth="10" markerHeight="10" refX="8" refY="5" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10" fill="#526975"/></marker></defs>
+<rect width="1600" height="1030" fill="#f6f9fb"/>
+<text x="60" y="62" font-family="DejaVu Sans, sans-serif" font-size="34" fill="#152d37" font-weight="700" text-anchor="start">Build and verify the deployment</text>
+<text x="60" y="103" font-family="DejaVu Sans, sans-serif" font-size="21" fill="#526975" font-weight="400" text-anchor="start">A reader workflow reconstructed from the runbooks • not a claim about the original command-by-command history</text>
+<rect x="60" y="180" width="460" height="140" rx="12" fill="white" stroke="#147d64" stroke-width="2"/>
+<text x="78" y="212" font-family="DejaVu Sans, sans-serif" font-size="23" fill="#147d64" font-weight="700" text-anchor="start">1  Prepare Proxmox</text>
+<text x="78" y="244" font-family="DejaVu Sans, sans-serif" font-size="20" fill="#152d37" font-weight="400" text-anchor="start">Migrate Ceph-dependent disks</text>
+<text x="78" y="272" font-family="DejaVu Sans, sans-serif" font-size="20" fill="#152d37" font-weight="400" text-anchor="start">Upgrade and verify quorum</text>
+<rect x="570" y="180" width="460" height="140" rx="12" fill="white" stroke="#147d64" stroke-width="2"/>
+<text x="588" y="212" font-family="DejaVu Sans, sans-serif" font-size="23" fill="#147d64" font-weight="700" text-anchor="start">2  Verify the underlay</text>
+<text x="588" y="244" font-family="DejaVu Sans, sans-serif" font-size="20" fill="#152d37" font-weight="400" text-anchor="start">10.255.255.1 ↔ 10.255.255.2</text>
+<text x="588" y="272" font-family="DejaVu Sans, sans-serif" font-size="20" fill="#152d37" font-weight="400" text-anchor="start">10 GbE • MTU 9000</text>
+<rect x="1080" y="180" width="460" height="140" rx="12" fill="white" stroke="#147d64" stroke-width="2"/>
+<text x="1098" y="212" font-family="DejaVu Sans, sans-serif" font-size="23" fill="#147d64" font-weight="700" text-anchor="start">3  Configure EVPN / VNets</text>
+<text x="1098" y="244" font-family="DejaVu Sans, sans-serif" font-size="20" fill="#152d37" font-weight="400" text-anchor="start">Controller → zone → VNets</text>
+<text x="1098" y="272" font-family="DejaVu Sans, sans-serif" font-size="20" fill="#152d37" font-weight="400" text-anchor="start">Apply; test across hosts</text>
+<rect x="1080" y="435" width="460" height="140" rx="12" fill="white" stroke="#147d64" stroke-width="2"/>
+<text x="1098" y="467" font-family="DejaVu Sans, sans-serif" font-size="23" fill="#147d64" font-weight="700" text-anchor="start">4  Build DNS and routing</text>
+<text x="1098" y="499" font-family="DejaVu Sans, sans-serif" font-size="20" fill="#152d37" font-weight="400" text-anchor="start">Primary / secondary + Unbound</text>
+<text x="1098" y="527" font-family="DejaVu Sans, sans-serif" font-size="20" fill="#152d37" font-weight="400" text-anchor="start">Upstream router routes and forwards</text>
+<rect x="570" y="435" width="460" height="140" rx="12" fill="white" stroke="#147d64" stroke-width="2"/>
+<text x="588" y="467" font-family="DejaVu Sans, sans-serif" font-size="23" fill="#147d64" font-weight="700" text-anchor="start">5  Provision Rocky nodes</text>
+<text x="588" y="499" font-family="DejaVu Sans, sans-serif" font-size="20" fill="#152d37" font-weight="400" text-anchor="start">Cloud-init • static addresses</text>
+<text x="588" y="527" font-family="DejaVu Sans, sans-serif" font-size="20" fill="#152d37" font-weight="400" text-anchor="start">Prepare runtime → kubeadm → Cilium</text>
+<rect x="60" y="435" width="460" height="140" rx="12" fill="white" stroke="#147d64" stroke-width="2"/>
+<text x="78" y="467" font-family="DejaVu Sans, sans-serif" font-size="23" fill="#147d64" font-weight="700" text-anchor="start">6  Verify Kubernetes</text>
+<text x="78" y="499" font-family="DejaVu Sans, sans-serif" font-size="20" fill="#152d37" font-weight="400" text-anchor="start">Nodes Ready; Cilium healthy</text>
+<text x="78" y="527" font-family="DejaVu Sans, sans-serif" font-size="20" fill="#152d37" font-weight="400" text-anchor="start">Cross-node pod traffic and DNS</text>
+<rect x="60" y="690" width="460" height="140" rx="12" fill="white" stroke="#147d64" stroke-width="2"/>
+<text x="78" y="722" font-family="DejaVu Sans, sans-serif" font-size="23" fill="#147d64" font-weight="700" text-anchor="start">7  Deploy applications</text>
+<text x="78" y="754" font-family="DejaVu Sans, sans-serif" font-size="20" fill="#152d37" font-weight="400" text-anchor="start">Wiki static build; Example site NFS</text>
+<text x="78" y="782" font-family="DejaVu Sans, sans-serif" font-size="20" fill="#152d37" font-weight="400" text-anchor="start">Services and readiness checks</text>
+<rect x="570" y="690" width="460" height="140" rx="12" fill="white" stroke="#147d64" stroke-width="2"/>
+<text x="588" y="722" font-family="DejaVu Sans, sans-serif" font-size="23" fill="#147d64" font-weight="700" text-anchor="start">8  Publish and validate</text>
+<text x="588" y="754" font-family="DejaVu Sans, sans-serif" font-size="20" fill="#152d37" font-weight="400" text-anchor="start">Gateway + VIP + TLS + policy</text>
+<text x="588" y="782" font-family="DejaVu Sans, sans-serif" font-size="20" fill="#152d37" font-weight="400" text-anchor="start">Test before DNS; verify failover</text>
+<polyline points="520,250 570,250" fill="none" stroke="#526975" stroke-width="3" marker-end="url(#arrow)"/>
+<polyline points="1030,250 1080,250" fill="none" stroke="#526975" stroke-width="3" marker-end="url(#arrow)"/>
+<polyline points="1310,320 1310,435" fill="none" stroke="#526975" stroke-width="3" marker-end="url(#arrow)"/>
+<polyline points="1080,505 1030,505" fill="none" stroke="#526975" stroke-width="3" marker-end="url(#arrow)"/>
+<polyline points="570,505 520,505" fill="none" stroke="#526975" stroke-width="3" marker-end="url(#arrow)"/>
+<polyline points="290,575 290,690" fill="none" stroke="#526975" stroke-width="3" marker-end="url(#arrow)"/>
+<polyline points="520,760 570,760" fill="none" stroke="#526975" stroke-width="3" marker-end="url(#arrow)"/>
+<rect x="1080" y="690" width="460" height="140" rx="12" fill="white" stroke="#a56420" stroke-width="2"/>
+<text x="1098" y="722" font-family="DejaVu Sans, sans-serif" font-size="23" fill="#a56420" font-weight="700" text-anchor="start">Then protect and operate</text>
+<text x="1098" y="754" font-family="DejaVu Sans, sans-serif" font-size="20" fill="#152d37" font-weight="400" text-anchor="start">Current backups / restore drills</text>
+<text x="1098" y="782" font-family="DejaVu Sans, sans-serif" font-size="20" fill="#152d37" font-weight="400" text-anchor="start">Maintenance and monitoring</text>
+<polyline points="1030,760 1080,760" fill="none" stroke="#526975" stroke-width="3" marker-end="url(#arrow)"/>
+<text x="60" y="965" font-family="DejaVu Sans, sans-serif" font-size="18" fill="#526975" font-weight="400" text-anchor="start">Retain configuration after each checkpoint. Back up stateful data separately from application manifests.</text>
+<text x="60" y="992" font-family="DejaVu Sans, sans-serif" font-size="18" fill="#526975" font-weight="400" text-anchor="start">Bootstrap/wiki code was lab-tested; public address and hostname substitutions require your own validation.</text>
+</svg>

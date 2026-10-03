@@ -1,0 +1,11 @@
+{
+  "date": "2026-10-03",
+  "checks": [
+    "private-key headers",
+    "GitHub/OpenAI token patterns",
+    "kubeadm join-token pattern",
+    "known lab credential values"
+  ],
+  "files_checked": 21,
+  "credential_matches": []
+}

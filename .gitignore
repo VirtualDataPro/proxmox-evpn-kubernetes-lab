@@ -1,0 +1,13 @@
+.venv/
+__pycache__/
+*.pyc
+wiki/site/
+wiki-resources.json
+*.key
+*.pem
+*.p12
+*.pfx
+kubeconfig*
+admin.conf
+state.json
+CREDENTIALS.md
