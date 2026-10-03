@@ -147,3 +147,5 @@ Expected: HTTPS 200 with the built wiki and HTTP 301 to HTTPS. Copy only the pub
 [VRF-aware guest SSH](docs/network.md#guest-ssh-through-the-vrf) handles the documented asymmetric direct path. For workstation kubectl, securely copy admin.conf to a private mode 600 kubeconfig. Tunnel `127.0.0.1:16443` to the API through the guest SSH alias. In a copy, set server to `https://127.0.0.1:16443` and TLS server name to the API certificate's original IP or SAN hostname; preserve CA/client credentials.
 
 A two-site extension can share one VIP: the example website terminates TLS at Cilium while the wiki uses TLS passthrough. Scoped egress and NFS storage are extensions, not prerequisites for the static wiki. See [extensions](docs/extensions.md), and [acceptance results](evidence/acceptance.md).
+
+The [original deployment lessons](docs/deployment-lessons.md) explain backup preparation, pod-level checks, Cilium test exclusions and a NetworkManager route incident.

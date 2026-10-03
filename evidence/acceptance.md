@@ -13,3 +13,7 @@ All public addresses, hostnames, storage IDs and object identities were generali
 ## Separate historical MTU result
 
 A prior four-guest test repaired a 1600-byte guest/1500-byte uplink mismatch by using MTU 1500 for guests and VNets. All twelve directed guest paths and all four upstream paths passed their 1500-byte DF tests; 1501-byte DF packets were rejected locally as expected. Underlay capture showed no outer fragmentation. This is a summary of retained private evidence, not a new four-node acceptance run or proof of every external PMTU path.
+
+## Original deployment records
+
+The separate [four-node deployment lessons](../docs/deployment-lessons.md) summarize pre-conversion backups, original cluster health, pod DNS/MTU checks, the focused 39-action Cilium run, the broader run’s six failures and a NetworkManager route-recovery incident. These historical results do not expand the scope of the disposable two-VM acceptance run above.
