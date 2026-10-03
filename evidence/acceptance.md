@@ -9,3 +9,7 @@ A second content revision and rollback both passed. A cross-host 1500-byte DF pi
 The test allowed workloads on its sole control plane to supply two physical scheduling domains. It did not establish control-plane HA, physical-host failure recovery, an independent SDN/DNS/router rebuild, or the optional egress/NFS extensions. Kubeadm warned about the vendor Rocky 5.14 kernel versus its upstream LTS allowlist; this is a lab result, not a production support certification.
 
 All public addresses, hostnames, storage IDs and object identities were generalized after this run. The example configuration was not executed with those exact substituted values. Adapt and validate it in your own environment. Original internal topology exports, raw acceptance output, private state, credentials and screenshots are excluded from this public repository.
+
+## Separate historical MTU result
+
+A prior four-guest test repaired a 1600-byte guest/1500-byte uplink mismatch by using MTU 1500 for guests and VNets. All twelve directed guest paths and all four upstream paths passed their 1500-byte DF tests; 1501-byte DF packets were rejected locally as expected. Underlay capture showed no outer fragmentation. This is a summary of retained private evidence, not a new four-node acceptance run or proof of every external PMTU path.
